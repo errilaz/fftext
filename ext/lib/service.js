@@ -1,4 +1,4 @@
-const native = chrome.runtime.connectNative("fftext");
+let native = chrome.runtime.connectNative("fftext")
 let app = null
 
 native.onMessage.addListener(message => {
@@ -6,7 +6,8 @@ native.onMessage.addListener(message => {
 })
 
 native.onDisconnect.addListener(() => {
-  console.log("service: native port disconnected");
+  console.log("service: native port disconnected")
+  native = chrome.runtime.connectNative("fftext");
 });
 
 chrome.runtime.onConnect.addListener(content => {

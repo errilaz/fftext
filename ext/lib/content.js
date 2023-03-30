@@ -10,4 +10,4 @@ bridge.onMessage.addListener(command => {
   window.postMessage(command)
 })
 
-console.log("content: loaded!")
+console.log("content: loaded")

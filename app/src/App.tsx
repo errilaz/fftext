@@ -1,18 +1,21 @@
 import { AppShell, Navbar, Title, Button, SegmentedControl, Group, Text, Stack,
   Center, Select, Box, Slider, NumberInput, Grid, ScrollArea, Tabs, Flex, ActionIcon, HoverCard, Modal, Divider } from "@mantine/core"
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure } from "@mantine/hooks"
 import { IconArrowBackUp } from "@tabler/icons-react"
 import { ReactNode, useEffect, useState } from "react"
 import Cropper, { Crop } from "react-image-crop"
 import { Command, HostCommand } from "@fftext/core"
 import "react-image-crop/dist/ReactCrop.css"
+import CommandBar from "./components/CommandBar"
+import { useRender } from "./state/render"
+import { useDebouncedCallback, useThrottledCallback } from "use-debounce"
 
 function App() {
   const [helpOpen, { open: openHelp, close: closeHelp }] = useDisclosure(false)
   const [crop, setCrop] = useState<Crop>()
-  const [cropScale, setCropScale] = useState(0)
+  const [cropScale, setCropScale] = useState(1)
 
-  const [data, setData] = useState<string | null>(null)
+  const [path, setPath] = useState<string | null>(null)
 
   useEffect(() => {
     window.addEventListener("message", receive)
@@ -25,7 +28,7 @@ function App() {
       const command = message.data as Command
       if (command.target === "app") {
         if (command.action === "open-file") {
-          setData(command.data)
+          setPath(command.source.path)
         }
       }
     }
@@ -42,21 +45,13 @@ function App() {
   return (
     <AppShell
       padding={0}
+      style={{ userSelect: "none" }}
       navbar={
-        <Navbar p="xs" width={{ base: 360 }} style={{ userSelect: "none" }}>
-          <Navbar.Section>
-            <Group position="apart">
-              <Title size="h2" align="left">fftext</Title>
-              <Control>
-                <Button.Group>
-                  <Button onClick={openHelp}>Help</Button>
-                  <Button onClick={loadFile}>Load</Button>
-                  <Button>Save</Button>
-                  <Button>Copy</Button>
-                </Button.Group>
-              </Control>
-            </Group>
-          </Navbar.Section>
+        <Navbar p="xs" width={{ base: 360 }}>
+          <CommandBar
+            openHelp={openHelp}
+            loadFile={loadFile}
+          />
           <Navbar.Section grow mt="xs">
             <Grid grow align="center" columns={12} gutter="xs">
               <Grid.Col span={12}>
@@ -121,14 +116,7 @@ function App() {
               <Grid.Col span={12}>
                 <Text>Modify</Text>
               </Grid.Col>
-              <Adjust
-                label="Brightness"
-                property="brightness"
-                defaultValue={0}
-                min={-100}
-                max={100}
-                step={1}
-              />
+              <Brightness />
               <Adjust
                 label="Contrast"
                 property="contrast"
@@ -188,6 +176,25 @@ function App() {
                 max={255}
                 step={1}
               />
+              <Grid.Col span={12}>
+                <Text>Effects</Text>
+              </Grid.Col>
+              <Adjust
+                label="Gamma"
+                property="gamma"
+                defaultValue={2.2}
+                min={1}
+                max={3}
+                step={0.1}
+              />
+              <Adjust
+                label="CLAHE"
+                property="clahe"
+                defaultValue={2.2}
+                min={1}
+                max={3}
+                step={0.1}
+              />
             </Grid>
           </Navbar.Section>
         </Navbar>
@@ -209,7 +216,7 @@ function App() {
           <Tabs.Tab value="crop">Crop</Tabs.Tab>
         </Tabs.List>
         <Tabs.Panel value="render" bg="black">
-          {data && <img src={data} />}
+          {path && <img src={`/local-file${path}`} />}
         </Tabs.Panel>
         <Tabs.Panel value="crop" bg="black">
           <Flex style={{ width: "100%", height: "100%" }}>
@@ -232,7 +239,7 @@ function App() {
                 onChange={crop => setCrop(crop)}
                 style={{ transform: `scale(${cropScale})` }}
               >
-                <img src="/test.jpg" />
+                {path && <img src={`/local-file${path}`} />}
               </Cropper>
             </div>
             <Divider size="lg" orientation="vertical" color="dark" />
@@ -259,13 +266,36 @@ function Control({ children }: { children: ReactNode }) {
   )
 }
 
-function Adjust({ label, property, defaultValue, min, max, step }: {
+function Brightness() {
+  const brightness = useRender(state => state.render.effects.brightness)
+  const adjust = useRender(state => state.adjust)
+  const reset = useRender(state => state.resetEffect)
+
+  return (
+    <Adjust
+      label="Brightness"
+      property="brightness"
+      defaultValue={0}
+      value={brightness}
+      onChange={value => adjust("brightness", value)}
+      onReset={() => reset("brightness")}
+      min={-100}
+      max={100}
+      step={1}
+    />
+  )
+}
+
+function Adjust({ label, property, defaultValue, min, max, step, value, onChange, onReset }: {
   label: string
   property: string
   defaultValue: number
+  value?: number
   min: number
   max: number
   step: number
+  onChange?: (value: number) => void
+  onReset?: () => void
 }) {
   return (
     <>
@@ -279,6 +309,7 @@ function Adjust({ label, property, defaultValue, min, max, step }: {
               variant="subtle"
               color="dark"
               leftIcon={<IconArrowBackUp />}
+              onClick={onReset}
             >
               Reset
             </Button>
@@ -289,15 +320,19 @@ function Adjust({ label, property, defaultValue, min, max, step }: {
         <Slider
           size="sm"
           defaultValue={defaultValue}
+          value={value}
           min={min}
           max={max}
           step={step}
           showLabelOnHover
+          onChange={onChange}
         />
       </Grid.Col>
       <Grid.Col span={2}>
         <NumberInput
           defaultValue={defaultValue}
+          onChange={onChange}
+          value={value}
           min={min}
           max={max}
           step={step}

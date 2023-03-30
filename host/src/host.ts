@@ -1,17 +1,18 @@
-import { readFile } from "fs/promises"
-import { parse } from "path"
+import { Source } from "@fftext/core"
+import sharp, { Sharp } from "sharp"
 import createBridge from "./bridge"
 import { openFile } from "./gui"
+
+let image: Sharp | undefined
 
 const send = createBridge(async command => {
   if (command.action === "open-file") {
     const path = await openFile()
     if (path) {
-      const buffer = await readFile(path)
-      const ext = parse(path).ext.substring(1)
-      const base64 = buffer.toString("base64")
-      const data = `data:image/${ext};base64,${base64}`
-      send({ action: "open-file", data })
+      image = sharp(path)
+      const { width, height } = await image.metadata()
+      send({ action: "open-file", source: { path, width, height } as Source })
     }
   }
 })
+
