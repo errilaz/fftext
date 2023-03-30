@@ -1,0 +1,15 @@
+{
+  "name": "@fftext/core",
+  "private": true,
+  "version": "0.0.1",
+  "main": "src/core.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf lib"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "typescript": "^4.9.3"
+  }
+}

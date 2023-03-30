@@ -1,0 +1,21 @@
+{
+  "name": "@fftext/host",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@josephuspaye/chrome-native-bridge": "^0.3.0",
+    "image-dither": "^1.0.1",
+    "sharp": "^0.32.0",
+    "@fftext/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.10",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
+  }
+}

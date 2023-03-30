@@ -1,0 +1,35 @@
+#!/bin/bash
+export FFTEXT=$(realpath "$(dirname $(readlink -f $BASH_SOURCE))")
+
+find-browser() {
+  path=$(which $1)
+  if ! [ -z $path ]
+  then
+    browser=$2
+    version=$($path --product-version)
+  fi
+}
+
+find-browser brave-browser brave
+[ -z "$browser" ] && find-browser chromium-browser chromium
+[ -z "$browser" ] && find-browser google-chrome chrome
+[ -z "$browser" ] && find-browser vivaldi vivaldi
+[ -z "$browser" ] && find-browser microsoft-edge-stable edge
+[ -z "$browser" ] && zenity --error --text="Chromium-based browser not found." && exit
+
+node=$(which node)
+[ -z $node ] && zenity --error --text="Node.js not found." && exit
+
+echo "found browser: $browser"
+
+if [[ $FFTEXT_DEV = "true" ]]; then
+  echo "running in dev mode"
+  rm -rf "$FFTEXT/data/profile/Default/Service\ Worker"
+  $browser --load-extension="$FFTEXT/ext" \
+    --user-data-dir="$FFTEXT/data/profile" \
+    --app="http://localhost:5173" \
+    --auto-open-devtools-for-tabs \
+    --enable-logging=stderr
+else
+  echo "TODO"
+fi
