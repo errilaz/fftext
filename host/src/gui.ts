@@ -1,13 +1,13 @@
 import { spawn } from "child_process"
 
-export async function openFile() {
+export async function selectFile() {
   if (process.platform === "linux") {
-    return openFileLinux()
+    return selectFileLinux()
   }
   throw new Error(`Unsupported platform: ${process.platform}.`)
 }
 
-function openFileLinux(): Promise<string | undefined> {
+function selectFileLinux(): Promise<string | undefined> {
   return new Promise(resolve => {
     let result: undefined | string = undefined
     const child = spawn("zenity", [
