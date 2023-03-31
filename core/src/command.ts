@@ -14,9 +14,16 @@ export interface HostOpenFile {
 
 export type AppCommand =
   | AppOpenFile
+  | AppRendered
 
 export interface AppOpenFile {
   target: "app"
   action: "openFile"
   source: Source
+}
+
+export interface AppRendered {
+  target: "app"
+  action: "rendered"
+  path: string
 }

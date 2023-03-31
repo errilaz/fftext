@@ -51,6 +51,14 @@ export type ToggleEffectsConfig = {
   }
 }
 
+export type Modulate = Partial<Pick<Effects,
+  | "brightness"
+  | "contrast"
+  | "saturation"
+  | "hue"
+  | "lightness"
+>>
+
 export module Effects {
   export const config:
     & SimpleEffectMap<EffectConfig>
@@ -90,6 +98,26 @@ export module Effects {
     threshold: {
       value: configure(128, 0, 255, 1),
     }
+  }
+
+  export function getModulate(effects: Effects) {
+    const modulate: Modulate = {}
+    if (effects.brightness !== Effects.config.brightness.default) {
+      modulate.brightness = effects.brightness
+    }
+    if (effects.contrast !== Effects.config.contrast.default) {
+      modulate.contrast = effects.contrast
+    }
+    if (effects.saturation !== Effects.config.saturation.default) {
+      modulate.saturation = effects.saturation
+    }
+    if (effects.hue !== Effects.config.hue.default) {
+      modulate.hue = effects.hue
+    }
+    if (effects.lightness !== Effects.config.lightness.default) {
+      modulate.lightness = effects.lightness
+    }
+    return modulate
   }
 }
 

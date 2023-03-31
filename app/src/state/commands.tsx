@@ -29,6 +29,11 @@ export function useCommands() {
     window.postMessage({ target: "host", ...command })
   }
 
+  const actions = {
+    async rendered() {
+    },
+  }
+
   return {
     loadFile() {
       send({ action: "openFile" })

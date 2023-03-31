@@ -21,7 +21,7 @@ export default function createBridge(receive: (command: HostCommand) => void) {
     }
   )
 
-  return (command: Omit<AppCommand, "target">) => {
+  return <Command extends Omit<AppCommand, "target">>(command: Command) => {
     bridge.emit({ target: "app", ...command })
   }
 }
