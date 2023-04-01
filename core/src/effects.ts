@@ -37,7 +37,6 @@ export type ToggleEffectMap<To> = {
 
 export type ToggleEffect = keyof ToggleEffectMap<any>
 
-
 export type EffectConfig = {
   default: number
   min: number

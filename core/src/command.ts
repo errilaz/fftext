@@ -1,29 +1,20 @@
+import { Render } from "./render"
 import { Source } from "./source"
 
-export type Command =
-  | HostCommand
-  | AppCommand
-
-export type HostCommand =
-  | HostOpenFile
-
-export interface HostOpenFile {
-  target: "host"
-  action: "openFile"
+export interface Command {
+  target: "host" | "app"
+  method: string
+  parameters: any[]
 }
 
-export type AppCommand =
-  | AppOpenFile
-  | AppRendered
+export type Action = void | Promise<void>
 
-export interface AppOpenFile {
-  target: "app"
-  action: "openFile"
-  source: Source
+export interface HostService {
+  openFile(): Action
+  updateRender(render: Render): Action
 }
 
-export interface AppRendered {
-  target: "app"
-  action: "rendered"
-  path: string
+export interface AppService {
+  updateSource(source: Source): Action
+  updatePreview(path: string): Action
 }

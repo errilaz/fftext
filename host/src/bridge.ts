@@ -1,14 +1,14 @@
 import { ChromeNativeBridge } from "@josephuspaye/chrome-native-bridge"
-import { AppCommand, HostCommand } from "@fftext/core"
+import { AppService, Command, HostService } from "@fftext/core"
 
-export default function createBridge(receive: (command: HostCommand) => void) {
+export default function createBridge(host: HostService) {
   const bridge = new ChromeNativeBridge(
     process.argv,
     process.stdin,
     process.stdout,
     {
-      onMessage(message) {
-        receive(message)
+      onMessage(message: Command) {
+        (host as any)[message.method](...message.parameters)
       },
 
       onError(err) {
@@ -21,7 +21,13 @@ export default function createBridge(receive: (command: HostCommand) => void) {
     }
   )
 
-  return <Command extends Omit<AppCommand, "target">>(command: Command) => {
-    bridge.emit({ target: "app", ...command })
-  }
+  const service = new Proxy({}, {
+    get(obj, method) {
+      return (...parameters: any[]) => {
+        bridge.emit({ target: "app", method, parameters })
+      }
+    }
+  })
+
+  return service as AppService 
 }

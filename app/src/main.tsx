@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client"
 import { MantineProvider } from "@mantine/core"
 import App from "./App"
 import "./index.css"
+import { HostProvider } from "./state/host"
 
 const root = document.getElementById("root") as HTMLElement
 ReactDOM.createRoot(root).render(

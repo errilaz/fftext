@@ -1,15 +1,14 @@
 import { Navbar, SegmentedControl, Select, Stack, Text } from "@mantine/core"
 import { ReactNode } from "react"
-import { Commands } from "../state/commands"
 import AdjustSimpleEffect from "./AdjustSimpleEffect"
 import CommandBar from "./CommandBar"
 import EffectsGrid from "./EffectsGrid"
 import EffectsTabs from "./EffectsTabs"
 
-export default function Sidebar({ commands }: { commands: Commands }) {
+export default function Sidebar() {
   return (
     <Navbar p="xs" width={{ base: 360 }}>
-      <CommandBar commands={commands} />
+      <CommandBar />
       <Navbar.Section grow mt="xs">
         <EffectsGrid>
           <AdjustSimpleEffect effect="width" />
