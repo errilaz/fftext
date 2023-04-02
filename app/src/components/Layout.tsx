@@ -1,13 +1,13 @@
 import { CSSProperties, ReactNode } from "react"
 
-export function Fill({ top, bottom, left, right, gap, style, children }: {
+export function Fill({ top, bottom, left, right, gap, style, children, ...props }: PropsOf<"div"> & {
   top?: number
   bottom?: number
   left?: number
   right?: number
   gap?: number
-  children?: ReactNode
   style?: CSSProperties
+  children?: ReactNode
 }) {
   return (
     <div style={{
@@ -17,13 +17,13 @@ export function Fill({ top, bottom, left, right, gap, style, children }: {
       left: (left ?? gap ?? 0) + "px",
       right: (right ?? gap ?? 0) + "px",
       ...style,
-    }}>
+    }} {...props}>
       {children}
     </div>
   )
 }
 
-export type DockProps = {
+export type DockProps = PropsOf<"div"> & {
   gap?: number
   style?: CSSProperties
   children?: ReactNode
@@ -32,7 +32,7 @@ export type DockProps = {
   | { position: "top" | "bottom", height: number, width?: undefined  }
 )
 
-export function Dock({ position, width, height, gap, style, children }: DockProps) {
+export function Dock({ position, width, height, gap, style, children, ...props }: DockProps) {
   style = { ...style, position: "absolute" }
   if (position === "left" || position === "right") {
     style.top = (gap ?? 0) + "px"
@@ -47,7 +47,7 @@ export function Dock({ position, width, height, gap, style, children }: DockProp
     style.height = height
   }
   return (
-    <div style={style}>
+    <div style={style} {...props}>
       {children}
     </div>
   )

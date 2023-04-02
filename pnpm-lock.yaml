@@ -9,18 +9,19 @@ importers:
       '@mantine/core': ^6.0.5
       '@mantine/hooks': ^6.0.5
       '@tabler/icons-react': ^2.12.0
+      '@types/lodash.throttle': ^4.1.7
       '@types/node': ^18.15.10
       '@types/react': ^18.0.28
       '@types/react-dom': ^18.0.11
       '@vitejs/plugin-react-swc': ^3.0.0
       immer: ^9.0.21
+      lodash.throttle: ^4.1.1
       react: ^18.2.0
       react-dom: ^18.2.0
       react-image-crop: ^10.0.9
       scheduler: ^0.23.0
       typescript: ^4.9.3
       use-context-selector: ^1.4.1
-      use-debounce: ^9.0.3
       vite: ^4.2.0
       zustand: ^4.3.6
     dependencies:
@@ -30,14 +31,15 @@ importers:
       '@mantine/hooks': 6.0.5_react@18.2.0
       '@tabler/icons-react': 2.12.0_react@18.2.0
       immer: 9.0.21
+      lodash.throttle: 4.1.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-image-crop: 10.0.9_react@18.2.0
       scheduler: 0.23.0
       use-context-selector: 1.4.1_2szjah6qrhd6fr2kgr64p4pjgm
-      use-debounce: 9.0.3_react@18.2.0
       zustand: 4.3.6_immer@9.0.21+react@18.2.0
     devDependencies:
+      '@types/lodash.throttle': 4.1.7
       '@types/node': 18.15.11
       '@types/react': 18.0.31
       '@types/react-dom': 18.0.11
@@ -769,6 +771,16 @@ packages:
     resolution: {integrity: sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==}
     dev: true
 
+  /@types/lodash.throttle/4.1.7:
+    resolution: {integrity: sha512-znwGDpjCHQ4FpLLx19w4OXDqq8+OvREa05H89obtSyXyOFKL3dDjCslsmfBz0T2FU8dmf5Wx1QvogbINiGIu9g==}
+    dependencies:
+      '@types/lodash': 4.14.192
+    dev: true
+
+  /@types/lodash/4.14.192:
+    resolution: {integrity: sha512-km+Vyn3BYm5ytMO13k9KTp27O75rbQ0NFw+U//g+PX7VZyjCioXaRFisqSIJRECljcTv73G3i6BpglNGHgUQ5A==}
+    dev: true
+
   /@types/node/18.15.11:
     resolution: {integrity: sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==}
     dev: true
@@ -1137,6 +1149,10 @@ packages:
 
   /lines-and-columns/1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
+    dev: false
+
+  /lodash.throttle/4.1.1:
+    resolution: {integrity: sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==}
     dev: false
 
   /loose-envify/1.4.0:
@@ -1616,15 +1632,6 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       scheduler: 0.23.0
-    dev: false
-
-  /use-debounce/9.0.3_react@18.2.0:
-    resolution: {integrity: sha512-FhtlbDtDXILJV7Lix5OZj5yX/fW1tzq+VrvK1fnT2bUrPOGruU9Rw8NCEn+UI9wopfERBEZAOQ8lfeCJPllgnw==}
-    engines: {node: '>= 10.0.0'}
-    peerDependencies:
-      react: '>=16.8.0'
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /use-isomorphic-layout-effect/1.1.2_o2wclmlv6kymw75psj4clbbe6a:

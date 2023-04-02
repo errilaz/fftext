@@ -1,6 +1,6 @@
 import { Button, Group, Modal, Navbar, Stack, Title } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
-import { useHost } from "../state/host"
+import { useHost } from "./HostProvider"
 
 export default function CommandBar() {
   const { openFile } = useHost()

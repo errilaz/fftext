@@ -2,7 +2,6 @@ export interface Effects {
   width: number
   // Modulate
   brightness: number
-  contrast: number
   saturation: number
   hue: number
   lightness: number
@@ -11,6 +10,7 @@ export interface Effects {
   green: number
   blue: number
   // Isolated effects
+  contrast: Complex<{ value: number }>
   grayscale: Complex<{}>
   gamma: Complex<{ value: number }>
   median: Complex<{ size: number }>
@@ -52,7 +52,6 @@ export type ToggleEffectsConfig = {
 
 export type Modulate = Partial<Pick<Effects,
   | "brightness"
-  | "contrast"
   | "saturation"
   | "hue"
   | "lightness"
@@ -64,8 +63,7 @@ export module Effects {
     & ToggleEffectsConfig
     = {
     width: configure(80, 4, 300, 1),
-    brightness: configure(0, -100, 100, 1),
-    contrast: configure(0, -100, 100, 1),
+    brightness: configure(1, 0, 3, 0.1),
     saturation: configure(0, -100, 100, 1),
     hue: configure(0, 0, 360, 1),
     lightness: configure(0, -100, 100, 1),
@@ -73,6 +71,9 @@ export module Effects {
     green: configure(0, -255, 255, 1),
     blue: configure(0, -255, 255, 1),
     grayscale: false,
+    contrast: {
+      value: configure(50, -100, 100, 1),
+    },
     gamma: {
       value: configure(2.2, 1, 3, 0.1),
     },
@@ -103,9 +104,6 @@ export module Effects {
     const modulate: Modulate = {}
     if (effects.brightness !== Effects.config.brightness.default) {
       modulate.brightness = effects.brightness
-    }
-    if (effects.contrast !== Effects.config.contrast.default) {
-      modulate.contrast = effects.contrast
     }
     if (effects.saturation !== Effects.config.saturation.default) {
       modulate.saturation = effects.saturation

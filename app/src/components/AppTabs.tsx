@@ -1,10 +1,10 @@
 import { Tabs } from "@mantine/core"
 import CropPanel from "./CropPanel"
-import RenderPanel from "./RenderPanel"
+import PreviewPanel from "./PreviewPanel"
 
 export default function AppTabs() {
   return (
-    <Tabs variant="outline" defaultValue="render" styles={{
+    <Tabs variant="outline" defaultValue="preview" styles={{
       root: {
         height: "100%",
         display: "flex",
@@ -13,10 +13,10 @@ export default function AppTabs() {
       panel: { flex: 1 },
     }}>
       <Tabs.List>
-        <Tabs.Tab value="render">Render</Tabs.Tab>
+        <Tabs.Tab value="preview">Preview</Tabs.Tab>
         <Tabs.Tab value="crop">Crop</Tabs.Tab>
       </Tabs.List>
-      <RenderPanel />
+      <PreviewPanel />
       <CropPanel />
     </Tabs>
   )

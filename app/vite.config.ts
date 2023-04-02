@@ -10,7 +10,7 @@ export default defineConfig({
       name: "local-file-proxy",
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
-          const match = /^\/local\-file(\/.*)/.exec(req.url!)
+          const match = /^\/local\-file(\/[^?]*)/.exec(req.url!)
           if (match) {
             readFile(match[1]).then(buffer => {
               res.write(buffer)

@@ -13,11 +13,11 @@ export default function EffectsTabs() {
       </Tabs.List>
       <Tabs.Panel value="modulate" pt="xs">
         <EffectsGrid>
-          <AdjustSimpleEffect effect="brightness" />
-          <AdjustSimpleEffect effect="contrast" />
+          <AdjustSimpleEffect effect="lightness" />
+          {/* <AdjustSimpleEffect effect="contrast" /> */}
           <AdjustSimpleEffect effect="saturation" />
           <AdjustSimpleEffect effect="hue" />
-          <AdjustSimpleEffect effect="lightness" />
+          <AdjustSimpleEffect effect="brightness" />
         </EffectsGrid>
       </Tabs.Panel>
       <Tabs.Panel value="tint" pt="xs">

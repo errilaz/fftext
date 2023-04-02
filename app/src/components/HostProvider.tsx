@@ -1,6 +1,7 @@
 import { AppService, Command, HostService } from "@fftext/core"
 import { createContext, ReactNode, useContext, useEffect } from "react"
-import { useSource } from "./source"
+import { useRender } from "../state/render"
+import throttle from "lodash.throttle"
 
 export const HostContext = createContext({} as HostService)
 
@@ -8,14 +9,27 @@ export function useHost() {
   return useContext(HostContext)
 }
 
-export function HostProvider({ app, children }: {
-  app: AppService
+export function HostProvider({ createApp, children }: {
+  createApp: (host: HostService) => AppService
   children?: ReactNode
 }) {
-  const updateSource = useSource(state => state.update)
+
+  const host = new Proxy({}, {
+    get(obj, method) {
+      return (...parameters: any) => {
+        window.postMessage({ target: "host", method, parameters })
+      }
+    }
+  }) as HostService
+
+  const app = createApp(host)
 
   useEffect(() => {
     window.addEventListener("message", receive)
+
+    useRender.subscribe(throttle(({ render }) => {
+      host.updateRender(render)
+    }, 250, { leading: true, trailing: true }))
 
     return () => {
       window.removeEventListener("message", receive)
@@ -28,15 +42,6 @@ export function HostProvider({ app, children }: {
       }
     }
   }, [])
-
-  const host = new Proxy({}, {
-    get(obj, method) {
-      return (...parameters: any) => {
-        console.log("posting fucking message")
-        window.postMessage({ target: "host", method, parameters })
-      }
-    }
-  }) as HostService
 
   return (
     <HostContext.Provider value={host}>

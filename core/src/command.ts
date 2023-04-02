@@ -16,5 +16,5 @@ export interface HostService {
 
 export interface AppService {
   updateSource(source: Source): Action
-  updatePreview(path: string): Action
+  updatePreview(preview: Source): Action
 }

@@ -1,25 +1,30 @@
-import { AppService } from "@fftext/core"
+import { AppService, HostService } from "@fftext/core"
 import { AppShell } from "@mantine/core"
-import { HostProvider } from "./state/host"
 import Sidebar from "./components/Sidebar"
 import AppTabs from "./components/AppTabs"
-import { useSource } from "./state/source"
+import { useImages } from "./state/images"
+import { useRender } from "./state/render"
+import { HostProvider } from "./components/HostProvider"
 
 function App() {
-  const updateSource = useSource(state => state.update)
+  const updateSource = useImages(state => state.updateSource)
+  const updatePreview = useImages(state => state.updatePreview)
 
-  const service: AppService = {
+  const createApp = ({ updateRender }: HostService): AppService => ({
     updateSource(source) {
       updateSource(source)
+      const render = useRender.getState().render
+      updateRender(render)
     },
 
-    updatePreview() {
-      // TODO
-    }
-  }
+    updatePreview(preview) {
+      preview.path = preview.path + `?${Date.now()}`
+      updatePreview(preview)
+    },
+  })
 
   return (
-    <HostProvider app={service}>
+    <HostProvider createApp={createApp}>
       <AppShell navbar={<Sidebar />} padding={0}>
         <AppTabs />
       </AppShell>

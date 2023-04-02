@@ -26,17 +26,22 @@ const app = createBridge({
 async function refresh() {
   if (!image || !render) return
 
-  let preview = image.clone()
-    .resize({
-      width: render.effects.width,
-      kernel: render.interpolation,
-    })
-  
-  const modulate = Effects.getModulate(render.effects)
-  if (modulate) preview = preview.modulate(modulate)
-  
-  const path = resolve(process.env.FFTEXT!, "data", "output.png")
-  await image.toFile(path)
+  try {
+    let preview = image.clone()
+      .resize({
+        width: render.effects.width,
+        kernel: render.interpolation,
+      })
+    
+    const modulate = Effects.getModulate(render.effects)
+    if (modulate) preview = preview.modulate(modulate)
 
-  app.updatePreview(path)
+    const path = resolve(process.env.FFTEXT!, "data", "preview.png")
+    const { width, height } = await preview.toFile(path)
+
+    app.updatePreview({ path, width, height })
+  }
+  catch (e) {
+    console.error(e)
+  }
 }
