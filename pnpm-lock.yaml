@@ -59,6 +59,7 @@ importers:
       '@josephuspaye/chrome-native-bridge': ^0.3.0
       '@types/node': ^18.15.10
       image-dither: ^1.0.1
+      nearest-color: ^0.4.4
       sharp: ^0.32.0
       ts-node: ^10.9.1
       typescript: ^4.9.3
@@ -66,6 +67,7 @@ importers:
       '@fftext/core': link:../core
       '@josephuspaye/chrome-native-bridge': 0.3.0
       image-dither: 1.0.1
+      nearest-color: 0.4.4
       sharp: 0.32.0
     devDependencies:
       '@types/node': 18.15.11
@@ -1194,6 +1196,10 @@ packages:
 
   /napi-build-utils/1.0.2:
     resolution: {integrity: sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==}
+    dev: false
+
+  /nearest-color/0.4.4:
+    resolution: {integrity: sha512-orhcaIORC10tf41Ld2wwlcC+FaAavHG87JHWB3eHH5p7v2k9Tzym2XNEZzLAm5YJwGv6Q38WWc7SOb+Qfu/4NQ==}
     dev: false
 
   /node-abi/3.33.0:

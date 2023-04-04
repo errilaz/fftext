@@ -8,10 +8,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fftext/core": "workspace:*",
     "@josephuspaye/chrome-native-bridge": "^0.3.0",
     "image-dither": "^1.0.1",
-    "sharp": "^0.32.0",
-    "@fftext/core": "workspace:*"
+    "nearest-color": "^0.4.4",
+    "sharp": "^0.32.0"
   },
   "devDependencies": {
     "@types/node": "^18.15.10",

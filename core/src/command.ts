@@ -17,4 +17,5 @@ export interface HostService {
 export interface AppService {
   updateSource(source: Source): Action
   updatePreview(preview: Source): Action
+  log(...msgs: any[]): Action
 }

@@ -1,6 +1,5 @@
 import { EffectConfig, Effects, ToggleEffect, ToggleEffects } from "@fftext/core"
-import { Button, Grid, HoverCard, NumberInput, RangeSlider, Slider, Stack, Switch, Text } from "@mantine/core"
-import { IconArrowBackUp } from "@tabler/icons-react"
+import { Grid, NumberInput, RangeSlider, Slider, Stack, Switch, Text } from "@mantine/core"
 import { ChangeEvent, ReactNode } from "react"
 import { capitalize } from "../common/text"
 import { useRender } from "../state"
@@ -21,24 +20,15 @@ export function AdjustToggle({ effect, children }: {
 
   return (<>
     <Grid.Col span={2}>
-      <HoverCard withArrow>
-        <HoverCard.Target>
-          <Stack align="center">
-            <Text size="xs">{label}</Text>
-            <Switch size="xs" checked={enable} onChange={handleToggle} />
-          </Stack>
-        </HoverCard.Target>
-        <HoverCard.Dropdown p="0">
-          <Button
-            variant="subtle"
-            color="dark"
-            leftIcon={<IconArrowBackUp />}
-            onClick={() => reset(effect)}
-          >
-            Reset
-          </Button>
-        </HoverCard.Dropdown>
-      </HoverCard>
+      <Stack align="center">
+        <Text
+          size="xs"
+          onDoubleClick={() => reset(effect)}
+        >
+          {label}
+        </Text>
+        <Switch size="xs" checked={enable} onChange={handleToggle} />
+      </Stack>
     </Grid.Col>
     {children}
   </>)
@@ -52,7 +42,7 @@ export module AdjustToggle {
     const value = useRender(state => state.render.effects.toggle[effect][setting]) as number
     const adjust = useRender(state => state.adjustToggle)
 
-    const { min, max, step, precision, default: defaultValue } = (Effects.toggle[effect] as any)[setting]
+    const { min, max, step, default: defaultValue } = (Effects.toggle[effect] as any)[setting]
   
     return (<>
       <Grid.Col span={7}>

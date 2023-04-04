@@ -1,6 +1,5 @@
 import { Effects, ScalarEffect } from "@fftext/core"
-import { Button, Grid, HoverCard, NumberInput, Slider, Text } from "@mantine/core"
-import { IconArrowBackUp } from "@tabler/icons-react"
+import { Grid, NumberInput, Slider, Text } from "@mantine/core"
 import { capitalize } from "../common/text"
 import { useRender } from "../state"
 
@@ -17,21 +16,12 @@ export default function AdjustScalar({ effect }: {
   return (
     <>
       <Grid.Col span={2}>
-        <HoverCard withArrow>
-          <HoverCard.Target>
-            <Text size="xs">{label}</Text>
-          </HoverCard.Target>
-          <HoverCard.Dropdown p="0">
-            <Button
-              variant="subtle"
-              color="dark"
-              leftIcon={<IconArrowBackUp />}
-              onClick={() => reset(effect)}
-            >
-              Reset
-            </Button>
-          </HoverCard.Dropdown>
-        </HoverCard>
+        <Text
+          size="xs"
+          onDoubleClick={() => reset(effect)}
+        >
+          {label}
+        </Text>
       </Grid.Col>
       <Grid.Col span={7}>
         <Slider

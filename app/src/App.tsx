@@ -20,6 +20,10 @@ function App() {
       preview.path = preview.path + `?${Date.now()}`
       updatePreview(preview)
     },
+
+    log(...msgs) {
+      console.log(...msgs)
+    },
   })
 
   return (

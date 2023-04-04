@@ -3,6 +3,8 @@ import { Effects, Render } from "@fftext/core"
 import sharp, { Sharp } from "sharp"
 import createBridge from "./bridge"
 import { selectFile } from "./gui"
+import Dither from "image-dither"
+import nearestColor from "nearest-color"
 
 let image: Sharp | undefined
 let render: Render | undefined
@@ -70,8 +72,17 @@ async function refresh() {
       preview = preview.gamma(toggle.gamma.value)
     }
 
+    // Dither
+    
+    const { info, data } = await preview
+      .removeAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true })
+    
+    app.log(info, data)
+    
     // Write
-
+  
     const path = resolve(process.env.FFTEXT!, "data", "preview.png")
     const { width, height } = await preview.toFile(path)
 

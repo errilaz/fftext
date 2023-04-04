@@ -1,16 +1,29 @@
-import { Tabs } from "@mantine/core"
+import { Button, Grid, Group, HoverCard, Tabs, Text } from "@mantine/core"
 import AdjustToggle from "./AdjustToggle"
 import AdjustScalar from "./AdjustScalar"
 import EffectsGrid from "./EffectsGrid"
+import { useRender } from "../state"
 
 export default function EffectsTabs() {
+  const resetEffects = useRender(state => state.resetEffects)
+
   return (
     <Tabs variant="outline" defaultValue="effects">
-      <Tabs.List position="center">
+      <Tabs.List position="center" style={{ zIndex: 10 }}>
         <Tabs.Tab value="effects">Effects</Tabs.Tab>
         <Tabs.Tab value="pipeline">Pipeline</Tabs.Tab>
       </Tabs.List>
       <Tabs.Panel value="effects" pt="xs" pr="20px">
+        <Group position="center">
+          <Button
+            variant="subtle"
+            color="dark"
+            compact
+            onClick={() => resetEffects()}
+          >
+            Reset All
+          </Button>
+        </Group>
         <EffectsGrid>
           <AdjustScalar effect="lightness" />
           <AdjustScalar effect="saturation" />
