@@ -1,6 +1,6 @@
-import { Navbar, SegmentedControl, Select, Stack, Text } from "@mantine/core"
+import { Navbar, ScrollArea, SegmentedControl, Select, Stack, Text } from "@mantine/core"
 import { ReactNode } from "react"
-import AdjustSimpleEffect from "./AdjustSimpleEffect"
+import AdjustScalar from "./AdjustScalar"
 import CommandBar from "./CommandBar"
 import EffectsGrid from "./EffectsGrid"
 import EffectsTabs from "./EffectsTabs"
@@ -9,9 +9,9 @@ export default function Sidebar() {
   return (
     <Navbar p="xs" width={{ base: 360 }}>
       <CommandBar />
-      <Navbar.Section grow mt="xs">
+      <Navbar.Section mt="xs">
         <EffectsGrid>
-          <AdjustSimpleEffect effect="width" />
+          <AdjustScalar effect="width" />
         </EffectsGrid>
         <Control>
           <Text>Palette</Text>
@@ -59,6 +59,8 @@ export default function Sidebar() {
             ]}
           />
         </Control>
+      </Navbar.Section>
+      <Navbar.Section grow mt="xs" component={ScrollArea}>
         <EffectsTabs />
       </Navbar.Section>
     </Navbar>

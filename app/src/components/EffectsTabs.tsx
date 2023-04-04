@@ -1,49 +1,49 @@
 import { Tabs } from "@mantine/core"
-import AdjustSimpleEffect from "./AdjustSimpleEffect"
+import AdjustToggle from "./AdjustToggle"
+import AdjustScalar from "./AdjustScalar"
 import EffectsGrid from "./EffectsGrid"
 
 export default function EffectsTabs() {
   return (
-    <Tabs variant="outline" defaultValue="modulate">
-      <Tabs.List>
-        <Tabs.Tab value="modulate">Modulate</Tabs.Tab>
-        <Tabs.Tab value="tint">Tint</Tabs.Tab>
+    <Tabs variant="outline" defaultValue="effects">
+      <Tabs.List position="center">
         <Tabs.Tab value="effects">Effects</Tabs.Tab>
         <Tabs.Tab value="pipeline">Pipeline</Tabs.Tab>
       </Tabs.List>
-      <Tabs.Panel value="modulate" pt="xs">
+      <Tabs.Panel value="effects" pt="xs" pr="20px">
         <EffectsGrid>
-          <AdjustSimpleEffect effect="lightness" />
-          {/* <AdjustSimpleEffect effect="contrast" /> */}
-          <AdjustSimpleEffect effect="saturation" />
-          <AdjustSimpleEffect effect="hue" />
-          <AdjustSimpleEffect effect="brightness" />
+          <AdjustScalar effect="lightness" />
+          <AdjustScalar effect="saturation" />
+          <AdjustScalar effect="hue" />
+          <AdjustScalar effect="brightness" />
+          <AdjustScalar effect="red" />
+          <AdjustScalar effect="green" />
+          <AdjustScalar effect="blue" />
+          <AdjustToggle effect="gamma">
+            <AdjustToggle.Value effect="gamma" setting="value" />
+          </AdjustToggle>
+          <AdjustToggle effect="normalize">
+            <AdjustToggle.Range effect="normalize" lower="lower" upper="upper" />
+          </AdjustToggle>
+          
+          {/* <AdjustToggle effect="clahe">
+          </AdjustToggle> */}
+
+          <AdjustToggle effect="median">
+            <AdjustToggle.Value effect="median" setting="size" />
+          </AdjustToggle>
+          <AdjustToggle effect="sharpen">
+            <AdjustToggle.Value effect="sharpen" setting="sigma" />
+          </AdjustToggle>
+          <AdjustToggle effect="blur">
+            <AdjustToggle.Value effect="blur" setting="sigma" />
+          </AdjustToggle>
+          <AdjustToggle effect="threshold">
+            <AdjustToggle.Value effect="threshold" setting="value" />
+          </AdjustToggle>
         </EffectsGrid>
       </Tabs.Panel>
-      <Tabs.Panel value="tint" pt="xs">
-        <EffectsGrid>
-          <AdjustSimpleEffect effect="red" />
-          <AdjustSimpleEffect effect="green" />
-          <AdjustSimpleEffect effect="blue" />
-        </EffectsGrid>
-      </Tabs.Panel>
-      <Tabs.Panel value="effects" pt="xs">
-        <EffectsGrid>
-          {/* <Adjust
-            label="Gamma"
-            defaultValue={2.2}
-            min={1}
-            max={3}
-            step={0.1}
-          />
-          <Adjust
-            label="CLAHE"
-            defaultValue={2.2}
-            min={1}
-            max={3}
-            step={0.1}
-          /> */}
-        </EffectsGrid>
+      <Tabs.Panel value="pipeline" pt="xs">
       </Tabs.Panel>
     </Tabs>
   )

@@ -1,5 +1,5 @@
 import { Dithering } from "./dithering"
-import { Complex, Effects, SimpleEffect, ToggleEffect } from "./effects"
+import { Toggle, Effects, ToggleEffect } from "./effects"
 import { Interpolation } from "./interpolation"
 import { Palette } from "./palette"
 
@@ -8,8 +8,14 @@ export interface Render {
   interpolation: Interpolation
   dithering: Dithering
   effects: Effects
-  pipeline: (ToggleEffect | "modulate" | "tint")[]
+  pipeline: Transform[]
 }
+
+export type Transform =
+  | "resize"
+  | "modulate"
+  | "tint"
+  | ToggleEffect
 
 export module Render {
   export const create = (): Render => ({
@@ -17,26 +23,31 @@ export module Render {
     interpolation: "lanczos3",
     dithering: "none",
     effects: {
-      width: simpleDefault("width"),
-      brightness: simpleDefault("brightness"),
-      saturation: simpleDefault("saturation"),
-      hue: simpleDefault("hue"),
-      lightness: simpleDefault("lightness"),
-      red: simpleDefault("red"),
-      green: simpleDefault("green"),
-      blue: simpleDefault("blue"),
-      contrast: complexDefault("contrast"),
-      grayscale: complexDefault("grayscale"),
-      gamma: complexDefault("gamma"),
-      median: complexDefault("median"),
-      sharpen: complexDefault("sharpen"),
-      blur: complexDefault("blur"),
-      normalize: complexDefault("normalize"),
-      clahe: complexDefault("clahe"),
-      threshold: complexDefault("threshold"),
+      scalar: {
+        width: Effects.scalar.width.default,
+        brightness: Effects.scalar.brightness.default,
+        saturation: Effects.scalar.saturation.default,
+        hue: Effects.scalar.hue.default,
+        lightness: Effects.scalar.lightness.default,
+        red: Effects.scalar.red.default,
+        green: Effects.scalar.green.default,
+        blue: Effects.scalar.blue.default,
+      },
+      toggle: {
+        grayscale: { enable: false },
+        invert: { enable: false },
+        gamma: Effects.defaultToggle("gamma"),
+        median: Effects.defaultToggle("median"),
+        sharpen: Effects.defaultToggle("sharpen"),
+        blur: Effects.defaultToggle("blur"),
+        normalize: Effects.defaultToggle("normalize"),
+        clahe: Effects.defaultToggle("clahe"),
+        threshold: Effects.defaultToggle("threshold"),
+      },
     },
     pipeline: [
       "grayscale",
+      "invert",
       "modulate",
       "tint",
       "gamma",
@@ -48,18 +59,4 @@ export module Render {
       "threshold",
     ]
   })
-}
-
-function simpleDefault(effect: SimpleEffect) {
-  return Effects.config[effect].default
-}
-
-function complexDefault<E extends ToggleEffect>(effect: E): Complex<any> & { enable: false } {
-  return {
-    enable: false,
-    ...Object.keys(Effects.config[effect]).reduce((defaults, key) => ({
-      ...defaults,
-      [key]: (Effects.config[effect] as any)[key].default,
-    }), {}),
-  } as any
 }

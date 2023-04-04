@@ -1,6 +1,6 @@
 import { AppService, Command, HostService } from "@fftext/core"
 import { createContext, ReactNode, useContext, useEffect } from "react"
-import { useRender } from "../state/render"
+import { useRender } from "../state"
 import throttle from "lodash.throttle"
 
 export const HostContext = createContext({} as HostService)

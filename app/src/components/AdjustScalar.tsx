@@ -1,17 +1,17 @@
-import { Effects, SimpleEffect } from "@fftext/core"
+import { Effects, ScalarEffect } from "@fftext/core"
 import { Button, Grid, HoverCard, NumberInput, Slider, Text } from "@mantine/core"
 import { IconArrowBackUp } from "@tabler/icons-react"
 import { capitalize } from "../common/text"
-import { useRender } from "../state/render"
+import { useRender } from "../state"
 
-export default function AdjustSimpleEffect({ effect }: {
-  effect: SimpleEffect
+export default function AdjustScalar({ effect }: {
+  effect: ScalarEffect
 }) {
-  const value = useRender(state => state.render.effects[effect])
-  const adjust = useRender(state => state.adjust)
-  const reset = useRender(state => state.resetEffect)
+  const value = useRender(state => state.render.effects.scalar[effect])
+  const adjust = useRender(state => state.adjustScalar)
+  const reset = useRender(state => state.resetScalar)
 
-  const { min, max, step, default: defaultValue } = Effects.config[effect]
+  const { min, max, step, precision, default: defaultValue } = Effects.scalar[effect]
   const label = capitalize(effect)
 
   return (
@@ -45,7 +45,7 @@ export default function AdjustSimpleEffect({ effect }: {
           onChange={value => adjust(effect, value)}
         />
       </Grid.Col>
-      <Grid.Col span={2}>
+      <Grid.Col span={2} style={{ minWidth: "70px" }}>
         <NumberInput
           defaultValue={defaultValue}
           onChange={value => adjust(effect, typeof value === "number" ? value : 0)}
@@ -53,7 +53,7 @@ export default function AdjustSimpleEffect({ effect }: {
           min={min}
           max={max}
           step={step}
-          width={50}
+          precision={precision}
         />
       </Grid.Col>
     </>

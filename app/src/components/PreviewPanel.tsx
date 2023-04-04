@@ -1,6 +1,6 @@
 import { Tabs } from "@mantine/core"
 import { useState, WheelEvent, MouseEvent } from "react"
-import { useImages } from "../state/images"
+import { useImages } from "../state"
 import { Fill } from "./Layout"
 
 export default function PreviewPanel() {
@@ -52,7 +52,6 @@ export default function PreviewPanel() {
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onMouseOut={handleMouseUp}
       >
         {preview?.path && (
           <img

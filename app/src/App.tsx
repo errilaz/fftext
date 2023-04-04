@@ -2,8 +2,7 @@ import { AppService, HostService } from "@fftext/core"
 import { AppShell } from "@mantine/core"
 import Sidebar from "./components/Sidebar"
 import AppTabs from "./components/AppTabs"
-import { useImages } from "./state/images"
-import { useRender } from "./state/render"
+import { useImages, useRender } from "./state"
 import { HostProvider } from "./components/HostProvider"
 
 function App() {

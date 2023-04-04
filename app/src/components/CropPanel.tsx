@@ -1,7 +1,7 @@
 import Cropper, { Crop } from "react-image-crop"
 import { Divider, Flex, Tabs } from "@mantine/core"
 import { useState } from "react"
-import { useImages } from "../state/images"
+import { useImages } from "../state"
 
 export default function CropPanel() {
   const source = useImages(state => state.source)
