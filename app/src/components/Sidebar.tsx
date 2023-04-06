@@ -1,3 +1,4 @@
+import { Interpolation, Palette } from "@fftext/core"
 import { Flex, Group, Navbar, ScrollArea, SegmentedControl, Select, Stack, Text } from "@mantine/core"
 import { ReactNode } from "react"
 import AdjustScalar from "./AdjustScalar"
@@ -5,6 +6,7 @@ import CommandBar from "./CommandBar"
 import EffectsGrid from "./EffectsGrid"
 import EffectsTabs from "./EffectsTabs"
 import SegmentedOption from "./SegmentedOption"
+import SelectDithering from "./SelectDithering"
 
 export default function Sidebar() {
   return (
@@ -22,45 +24,16 @@ export default function Sidebar() {
         </EffectsGrid>
         <Control>
           <Text>Palette</Text>
-          <SegmentedOption option="palette" values={[
-            "xterm",
-            "win10",
-            "ubuntu",
-            "256",
-            "24bit",
-            "irc16",
-            "irc99",
-          ]} />
+          <SegmentedOption option="palette" values={Palette.names} />
         </Control>
         <Control>
           <Text>Interpolation</Text>
-          <SegmentedOption option="interpolation" values={[
-            "nearest",
-            "cubic",
-            "mitchell",
-            "lanczos2",
-            "lanczos3",
-          ]} />
+          <SegmentedOption option="interpolation" values={Interpolation.names} />
         </Control>
         <Control>
           <Group>
             <Text w={60}>Dithering</Text>
-            <Select
-              defaultValue="none"  
-              style={{ flex: 1 }}
-              data={[
-                { label: "none", value: "none" },
-                { label: "atkinson", value: "atkinson" },
-                { label: "burkes", value: "burkes" },
-                { label: "floyd-steinberg", value: "floyd-steinberg" },
-                { label: "jarvis-judice-ninke", value: "jarvis-judice-ninke" },
-                { label: "one-dimensional", value: "one-dimensional" },
-                { label: "sierra-lite", value: "sierra-lite" },
-                { label: "sierra2", value: "sierra2" },
-                { label: "sierra3", value: "sierra3" },
-                { label: "stucki", value: "stucki" },
-              ]}
-            />
+            <SelectDithering />
           </Group>
         </Control>
       </Navbar.Section>

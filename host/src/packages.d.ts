@@ -3,6 +3,9 @@ declare module "image-dither" {
 
   class Dither {
     constructor(options?: DitherOptions)
+
+    dither(data: Buffer | number[], width: number, options?: DitherOptions): number[]
+
     static matrices: {
       atkinson: DitherMatrix
       burkes: DitherMatrix
@@ -21,7 +24,7 @@ declare module "image-dither" {
     step?: number
     channels?: number
     diffusionFactor?: number
-    findColor?: (color: number[]) => number[]
+    findColor?: (color: [number, number, number, number]) => [number, number, number, number]
     matrix: DitherMatrix
   }
 
@@ -29,5 +32,18 @@ declare module "image-dither" {
 }
 
 declare module "nearest-color" {
-  
+  function from(map: ColorMap): FindNearest;
+
+  type FindNearest = (hex: string) => NearestColor
+
+  interface NearestColor {
+    name: string
+    value: string
+    rgb: { r: number, g: number, b: number }
+    distance: number
+  }
+
+  interface ColorMap {
+    [name: string]: string
+  }
 }

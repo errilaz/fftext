@@ -18,4 +18,5 @@ export interface AppService {
   updateSource(source: Source): Action
   updatePreview(preview: Source): Action
   log(...msgs: any[]): Action
+  error(...msgs: any[]): Action
 }

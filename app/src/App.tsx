@@ -24,6 +24,10 @@ function App() {
     log(...msgs) {
       console.log(...msgs)
     },
+
+    error(...msgs) {
+      console.error(...msgs)
+    },
   })
 
   return (

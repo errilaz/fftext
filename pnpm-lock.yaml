@@ -60,6 +60,7 @@ importers:
       '@types/node': ^18.15.10
       image-dither: ^1.0.1
       nearest-color: ^0.4.4
+      rgb-hex: ^4.0.1
       sharp: ^0.32.0
       ts-node: ^10.9.1
       typescript: ^4.9.3
@@ -68,6 +69,7 @@ importers:
       '@josephuspaye/chrome-native-bridge': 0.3.0
       image-dither: 1.0.1
       nearest-color: 0.4.4
+      rgb-hex: 4.0.1
       sharp: 0.32.0
     devDependencies:
       '@types/node': 18.15.11
@@ -1427,6 +1429,11 @@ packages:
       is-core-module: 2.11.0
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
+
+  /rgb-hex/4.0.1:
+    resolution: {integrity: sha512-HcNmN4252k7YgL1tlMatonEAJQlDrc1lt6UPjMO6xFD/DO6gX+NJz4EKRRZ9/I9nYUzVel6zhTJ5y3wdfSgJEQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /rollup/3.20.2:
     resolution: {integrity: sha512-3zwkBQl7Ai7MFYQE0y1MeQ15+9jsi7XxfrqwTb/9EK8D9C9+//EBR4M+CuA1KODRaNbFez/lWxA5vhEGZp4MUg==}

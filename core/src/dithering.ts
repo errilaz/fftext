@@ -11,7 +11,7 @@ export type Dithering =
   | "stucki"
 
 export module Dithering {
-  export const all: Dithering[] = [
+  export const names: Dithering[] = [
     "none",
     "atkinson",
     "burkes",

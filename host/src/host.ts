@@ -1,10 +1,10 @@
 import { resolve } from "path"
-import { Effects, Render } from "@fftext/core"
+import { Dithering, Effects, Render } from "@fftext/core"
 import sharp, { Sharp } from "sharp"
+import Dither from "image-dither"
 import createBridge from "./bridge"
 import { selectFile } from "./gui"
-import Dither from "image-dither"
-import nearestColor from "nearest-color"
+import Color from "./color"
 
 let image: Sharp | undefined
 let render: Render | undefined
@@ -73,13 +73,23 @@ async function refresh() {
     }
 
     // Dither
-    
-    const { info, data } = await preview
-      .removeAlpha()
-      .raw()
-      .toBuffer({ resolveWithObject: true })
-    
-    app.log(info, data)
+
+    if (render.palette !== "24bit") {
+      const { info, data } = await preview
+        .clone()
+        .raw()
+        .toBuffer({ resolveWithObject: true })
+      
+      const dither = new Dither({
+        matrix: matrix(render.dithering),
+        channels: info.channels,
+        findColor: Color.find(render.palette),
+      })
+      
+      const dithered = dither.dither(data, info.width)
+      app.log(data.length, dithered.length)
+      preview = sharp(Uint8Array.from(dithered), { raw: info })
+    }
     
     // Write
   
@@ -89,6 +99,22 @@ async function refresh() {
     app.updatePreview({ path, width, height })
   }
   catch (e) {
+    app.error(e)
     console.error(e)
+  }
+}
+
+export function matrix(dithering: Dithering) {
+  switch (dithering) {
+    case "none": return Dither.matrices.none
+    case "atkinson": return Dither.matrices.atkinson
+    case "burkes": return Dither.matrices.burkes
+    case "floyd-steinberg": return Dither.matrices.floydSteinberg
+    case "jarvis-judice-ninke": return Dither.matrices.jarvisJudiceNinke
+    case "one-dimensional": return Dither.matrices.oneDimensional
+    case "sierra-lite": return Dither.matrices.sierraLite
+    case "sierra2": return Dither.matrices.sierra2
+    case "sierra3": return Dither.matrices.sierra3
+    case "stucki": return Dither.matrices.stucki
   }
 }

@@ -7,8 +7,12 @@ export type Palette =
   | "irc16"
   | "irc99"
 
+export type PaletteMode =
+  | "ansi"
+  | "irc"
+
 export module Palette {
-  export const all: Palette[] = [
+  export const names: Palette[] = [
     "xterm",
     "win10",
     "ubuntu",

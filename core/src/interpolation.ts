@@ -6,7 +6,7 @@ export type Interpolation =
   | "lanczos3"
 
 export module Interpolation {
-  export const all: Interpolation[] = [
+  export const names: Interpolation[] = [
     "nearest",
     "cubic",
     "mitchell",
