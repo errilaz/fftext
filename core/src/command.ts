@@ -11,6 +11,7 @@ export type Action = void | Promise<void>
 
 export interface HostService {
   openFile(): Action
+  openBrowser(url: string): Action
   updateRender(render: Render): Action
 }
 

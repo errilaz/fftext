@@ -5,6 +5,7 @@ import Dither from "image-dither"
 import createBridge from "./bridge"
 import { selectFile } from "./gui"
 import Color from "./color"
+import openExternal from "open"
 
 let image: Sharp | undefined
 let render: Render | undefined
@@ -22,6 +23,10 @@ const app = createBridge({
   updateRender(update) {
     render = update
     refresh()
+  },
+
+  openBrowser(url) {
+    openExternal(url)
   },
 })
 
@@ -87,7 +92,6 @@ async function refresh() {
       })
       
       const dithered = dither.dither(data, info.width)
-      app.log(data.length, dithered.length)
       preview = sharp(Uint8Array.from(dithered), { raw: info })
     }
     

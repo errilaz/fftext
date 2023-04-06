@@ -1,21 +1,22 @@
 import { Tabs } from "@mantine/core"
 import { useState, WheelEvent, MouseEvent } from "react"
 import { useImages } from "../state"
+import { useCamera } from "../state/cameraState"
 import { Fill } from "./Layout"
 
 export default function PreviewPanel() {
   const preview = useImages(state => state.preview)
-  const [scale, setScale] = useState(10)
+  const zoom = useCamera(state => state.zoom)
+  const zoomIn = useCamera(state => state.zoomIn)
+  const zoomOut = useCamera(state => state.zoomOut)
+  const pan = useCamera(state => state.pan)
+  const setPan = useCamera(state => state.setPan)
+
   const [panning, setPanning] = useState(false)
-  const [pan, setPan] = useState([0, 0])
 
   const handleWheel = (event: WheelEvent) => {
-    if (event.deltaY > 0) {
-      setScale(s => s - (s / 10))
-    }
-    else if (event.deltaY < 0) {
-      setScale(s => s + (s / 10))
-    }
+    if (event.deltaY > 0) zoomOut(event.deltaY)
+    else if (event.deltaY < 0) zoomIn(-event.deltaY)
   }
 
   const handleMouseDown = (event: MouseEvent) => {
@@ -28,7 +29,8 @@ export default function PreviewPanel() {
 
   const handleMouseMove = (event: MouseEvent) => {
     if (panning) {
-      setPan(([x, y]) => [x + event.movementX / scale, y + event.movementY / scale])
+      const [x, y] = pan
+      setPan([x + event.movementX / zoom, y + event.movementY / zoom])
     }
   }
 
@@ -58,7 +60,7 @@ export default function PreviewPanel() {
             draggable={false}
             src={`/local-file${preview.path}`}
             style={{
-              transform: `scale(${scale}) translate(${pan[0]}px, ${pan[1]}px)`,
+              transform: `scale(${zoom}) translate(${pan[0]}px, ${pan[1]}px)`,
               imageRendering: "pixelated",
             }}
           />

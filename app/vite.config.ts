@@ -12,7 +12,8 @@ export default defineConfig({
         server.middlewares.use((req, res, next) => {
           const match = /^\/local\-file(\/[^?]*)/.exec(req.url!)
           if (match) {
-            readFile(match[1]).then(buffer => {
+            const path = decodeURIComponent(match[1])
+            readFile(path).then(buffer => {
               res.write(buffer)
               res.end()
             })

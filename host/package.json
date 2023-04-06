@@ -13,6 +13,7 @@
     "@josephuspaye/chrome-native-bridge": "^0.3.0",
     "image-dither": "^1.0.1",
     "nearest-color": "^0.4.4",
+    "open": "^9.1.0",
     "rgb-hex": "^4.0.1",
     "sharp": "^0.32.0"
   },

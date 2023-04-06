@@ -5,10 +5,12 @@ import { IconBug, IconClipboardCheck, IconClipboardCopy, IconCopy, IconDeviceFlo
 import { useShortcuts } from "../hooks"
 import { useHost } from "./HostProvider"
 import fftextPng from "../assets/fftext.png"
+import { useRender } from "../state"
 
 export default function CommandBar() {
-  const { openFile } = useHost()
+  const { openFile, openBrowser } = useHost()
   const [helpOpen, { open: openHelp, close: closeHelp }] = useDisclosure(false)
+  const resetEffects = useRender(state => state.resetEffects)
   
   useShortcuts({
     openHelp,
@@ -31,7 +33,11 @@ export default function CommandBar() {
       </Modal>
       <Stack mb="xs">
         <Group position="apart">
-          <img src={fftextPng} width="100px" />
+          <img
+            src={fftextPng}
+            width="110px"
+            style={{ imageRendering: "pixelated" }}
+          />
           <Button.Group>
             <Menu
               shadow="xl"
@@ -93,6 +99,7 @@ export default function CommandBar() {
                 </Menu.Item>
                 <Menu.Item
                   icon={<IconFilters size={18} />}
+                  onClick={() => resetEffects()}
                   rightSection={<Text color="dimmed">Ctrl+R</Text>}
                 >
                   Reset Effects
@@ -110,11 +117,13 @@ export default function CommandBar() {
               <Menu.Dropdown>
                 <Menu.Item
                   icon={<IconWorld size={18} />}
+                  onClick={() => openBrowser("https://errilaz.org/fftext")}
                 >
                   Website
                 </Menu.Item>
                 <Menu.Item
                   icon={<IconBug size={18} />}
+                  onClick={() => openBrowser("https://github.com/errilaz/fftext/issues")}
                 >
                   Report Bug
                 </Menu.Item>
