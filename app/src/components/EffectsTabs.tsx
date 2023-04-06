@@ -11,7 +11,7 @@ export default function EffectsTabs() {
     <Tabs variant="outline" defaultValue="effects">
       <Tabs.List position="center" style={{ zIndex: 10 }}>
         <Tabs.Tab value="effects">Effects</Tabs.Tab>
-        <Tabs.Tab value="pipeline">Pipeline</Tabs.Tab>
+        <Tabs.Tab value="pipeline" disabled>Pipeline</Tabs.Tab>
       </Tabs.List>
       <Tabs.Panel value="effects" pt="xs" pr="20px">
         <Group position="center">

@@ -14,7 +14,7 @@ export default function AppTabs() {
     }}>
       <Tabs.List>
         <Tabs.Tab value="preview">Preview</Tabs.Tab>
-        <Tabs.Tab value="crop">Crop</Tabs.Tab>
+        <Tabs.Tab value="crop" disabled>Crop</Tabs.Tab>
       </Tabs.List>
       <PreviewPanel />
       <CropPanel />

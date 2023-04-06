@@ -5,7 +5,7 @@ import { Fill } from "./Layout"
 
 export default function PreviewPanel() {
   const preview = useImages(state => state.preview)
-  const [scale, setScale] = useState(1)
+  const [scale, setScale] = useState(10)
   const [panning, setPanning] = useState(false)
   const [pan, setPan] = useState([0, 0])
 

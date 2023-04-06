@@ -18,6 +18,7 @@ export default function AdjustScalar({ effect }: {
       <Grid.Col span={2}>
         <Text
           size="xs"
+          align="center"
           onDoubleClick={() => reset(effect)}
         >
           {label}

@@ -23,6 +23,7 @@ export function AdjustToggle({ effect, children }: {
       <Stack align="center">
         <Text
           size="xs"
+          align="center"
           onDoubleClick={() => reset(effect)}
         >
           {label}

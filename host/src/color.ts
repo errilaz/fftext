@@ -12,6 +12,8 @@ module Color {
       case "ubuntu": return findUbuntu
       case "win10": return findWin10
       case "256": return find256
+      case "irc16": return findIrc16
+      case "irc99": return findIrc99
       default: throw new Error("Inconceivable.")
     }
   }  
@@ -22,7 +24,9 @@ export default Color
 const findXterm = createFind(nearestColor.from(getAnsi16Map(Ansi.xterm)))
 const findUbuntu = createFind(nearestColor.from(getAnsi16Map(Ansi.ubuntu)))
 const findWin10 = createFind(nearestColor.from(getAnsi16Map(Ansi.win10)))
-const find256 = createFind(nearestColor.from(getAnsi256Map()))
+const find256 = createFind(nearestColor.from(getColorMap(Ansi.ansi256)))
+const findIrc16 = createFind(nearestColor.from(getColorMap(Irc.irc16)))
+const findIrc99 = createFind(nearestColor.from(getColorMap(Irc.irc99)))
 
 function createFind(nearest: FindNearest) {
   const cache: { [hex: string]: RGBA } = {}
@@ -43,8 +47,8 @@ function getAnsi16Map(colors: Ansi.Ansi16Color[]) {
   ]))
 }
 
-function getAnsi256Map() {
-  return Object.fromEntries(Ansi.ansi256.map(([code, hex]) => [code.toString(), hex]))
+function getColorMap(colorList: [code: number, hex: string][]) {
+  return Object.fromEntries(colorList.map(([code, hex]) => [code.toString(), hex]))
 }
 
 function fix(x: number) {

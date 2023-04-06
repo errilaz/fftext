@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
 import { MantineProvider } from "@mantine/core"
+import { Notifications } from "@mantine/notifications"
 import App from "./App"
 import "./index.css"
 
@@ -29,8 +30,7 @@ ReactDOM.createRoot(root).render(
           },
           Text: {
             defaultProps: {
-              size: "sm",
-              align: "center",
+              size: "xs",
             },
           },
           Stack: {
@@ -48,10 +48,14 @@ ReactDOM.createRoot(root).render(
             defaultProps: {
               size: "xs",
             },
-          }
+          },
         },
       }}
     >
+      <Notifications
+        autoClose={3000}
+        position="top-right"
+      />
       <App />
     </MantineProvider>
   </React.StrictMode>
