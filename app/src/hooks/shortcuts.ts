@@ -6,7 +6,7 @@ import { useCamera } from "../state/cameraState"
 export function useShortcuts({ openHelp }: {
   openHelp(): void
 }) {
-  const { openFile } = useHost()
+  const { openFile, copyText } = useHost()
   const resetEffects = useRender(state => state.resetEffects)
   const zoomIn = useCamera(state => state.zoomIn)
   const zoomOut = useCamera(state => state.zoomOut)
@@ -16,11 +16,25 @@ export function useShortcuts({ openHelp }: {
     ["f1", () => openHelp()],
     ["ctrl+o", () => openFile()],
     ["ctrl+r", () => resetEffects()],
+    ["ctrl+c", () => copyText()],
+    ["ctrl+p", () => {}],
+    ["ctrl+s", () => {}],
+    ["ctrl+n", () => {}],
     ["-", () => zoomOut()],
     ["=", () => zoomIn()],
     ["ArrowLeft", () => panTo("left")],
     ["ArrowRight", () => panTo("right")],
     ["ArrowUp", () => panTo("up")],
     ["ArrowDown", () => panTo("down")],
+    // Disable browser shortcuts
+    ["f7", noop],
+    ["f12", noop],
+    ["ctrl+h", noop],
+    ["ctrl+j", noop],
+    ["ctrl+u", noop],
+    ["ctrl+a", noop],
+    ["ctrl+t", noop],
   ])
 }
+
+function noop() { }

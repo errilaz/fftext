@@ -1,26 +1,32 @@
 import { CSSProperties, ReactNode } from "react"
 
 export function Fill({ top, bottom, left, right, gap, style, children, ...props }: PropsOf<"div"> & {
-  top?: number
-  bottom?: number
-  left?: number
-  right?: number
-  gap?: number
+  top?: number | string
+  bottom?: number | string
+  left?: number | string
+  right?: number | string
+  gap?: number | string
   style?: CSSProperties
   children?: ReactNode
 }) {
   return (
     <div style={{
       position: "absolute",
-      top: (top ?? gap ?? 0) + "px",
-      bottom: (bottom ?? gap ?? 0) + "px",
-      left: (left ?? gap ?? 0) + "px",
-      right: (right ?? gap ?? 0) + "px",
+      top: length(top) ?? length(gap) ?? 0,
+      bottom: length(bottom) ?? length(gap) ?? 0,
+      left: length(left) ?? length(gap) ?? 0,
+      right: length(right) ?? length(gap) ?? 0,
       ...style,
     }} {...props}>
       {children}
     </div>
   )
+}
+
+function length(x: string | number | undefined) {
+  if (typeof x === "string") return x
+  if (typeof x === "number") return x + "px"
+  return undefined
 }
 
 export type DockProps = PropsOf<"div"> & {

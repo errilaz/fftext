@@ -7,6 +7,7 @@ import EffectsGrid from "./EffectsGrid"
 import EffectsTabs from "./EffectsTabs"
 import SegmentedOption from "./SegmentedOption"
 import SelectDithering from "./SelectDithering"
+import SelectInterpolation from "./SelectInterpolation"
 
 export default function Sidebar() {
   return (
@@ -27,8 +28,10 @@ export default function Sidebar() {
           <SegmentedOption option="palette" values={Palette.names} />
         </Control>
         <Control>
-          <Text>Interpolation</Text>
-          <SegmentedOption option="interpolation" values={Interpolation.names} />
+          <Group>
+            <Text w={60}>Interpolation</Text>
+            <SelectInterpolation />
+          </Group>
         </Control>
         <Control>
           <Group>

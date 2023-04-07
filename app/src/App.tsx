@@ -4,6 +4,8 @@ import Sidebar from "./components/Sidebar"
 import AppTabs from "./components/AppTabs"
 import { useImages, useRender } from "./state"
 import { HostProvider } from "./components/HostProvider"
+import { notifications } from "@mantine/notifications"
+import { IconClipboardCheck } from "@tabler/icons-react"
 
 function App() {
   const updateSource = useImages(state => state.updateSource)
@@ -27,6 +29,14 @@ function App() {
 
     error(...msgs) {
       console.error(...msgs)
+    },
+
+    copyText(path) {
+      notifications.show({
+        title: "fftext",
+        message: "Copied to clipboard!",
+        icon: <IconClipboardCheck />
+      })
     },
   })
 

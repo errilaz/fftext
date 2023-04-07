@@ -28,6 +28,10 @@ const app = createBridge({
   openBrowser(url) {
     openExternal(url)
   },
+
+  copyText() {
+    app.copyText("whocares")
+  },
 })
 
 async function refresh() {

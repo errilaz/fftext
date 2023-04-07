@@ -9,7 +9,10 @@ export default function CropPanel() {
   const [cropScale, setCropScale] = useState(1)
 
   return (
-    <Tabs.Panel value="crop" bg="black">
+    <Tabs.Panel
+      value="crop"
+      bg="black"
+    >
       <Flex style={{ width: "100%", height: "100%" }}>
         <div
           style={{

@@ -13,6 +13,7 @@ export interface HostService {
   openFile(): Action
   openBrowser(url: string): Action
   updateRender(render: Render): Action
+  copyText(): Action
 }
 
 export interface AppService {
@@ -20,4 +21,5 @@ export interface AppService {
   updatePreview(preview: Source): Action
   log(...msgs: any[]): Action
   error(...msgs: any[]): Action
+  copyText(path: string): Action
 }

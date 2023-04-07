@@ -11,10 +11,10 @@ export const useCamera = create<{
   zoom: 10,
   pan: [0, 0],
   zoomIn(factor) {
-    set(({ zoom }) => ({ zoom: zoom + (zoom * (factor ?? .1) / 1000) }))
+    set(({ zoom }) => ({ zoom: zoom + (zoom * (factor ?? 100) / 1000) }))
   },
   zoomOut(factor) {
-    set(({ zoom }) => ({ zoom: zoom - (zoom * (factor ?? .1) / 1000) }))
+    set(({ zoom }) => ({ zoom: zoom - (zoom * (factor ?? 100) / 1000) }))
   },
   setPan(pan) {
     set({ pan })

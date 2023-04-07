@@ -1,28 +1,20 @@
 import { Button, Group, Menu, Modal, Navbar, Stack, Text, Title } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import { notifications } from "@mantine/notifications"
-import { IconBug, IconClipboardCheck, IconClipboardCopy, IconCopy, IconDeviceFloppy, IconDoorExit, IconDownload, IconFileDownload, IconFileUpload, IconFilters, IconHelp, IconSquareRoundedX, IconUpload, IconWorld, IconWorldWww } from "@tabler/icons-react"
+import { IconBug, IconClipboardCheck, IconClipboardCopy, IconCopy, IconCrop, IconDeviceFloppy, IconDoorExit, IconDownload, IconFileDownload, IconFilePlus, IconFileUpload, IconFilters, IconHelp, IconSettings, IconSquareRoundedX, IconUpload, IconWorld, IconWorldWww } from "@tabler/icons-react"
 import { useShortcuts } from "../hooks"
 import { useHost } from "./HostProvider"
 import fftextPng from "../assets/fftext.png"
 import { useRender } from "../state"
 
 export default function CommandBar() {
-  const { openFile, openBrowser } = useHost()
+  const { openFile, openBrowser, copyText } = useHost()
   const [helpOpen, { open: openHelp, close: closeHelp }] = useDisclosure(false)
   const resetEffects = useRender(state => state.resetEffects)
   
   useShortcuts({
     openHelp,
   })
-
-  function copyText() {
-    notifications.show({
-      title: "fftext",
-      message: "Copied to clipboard!",
-      icon: <IconClipboardCheck />
-    })
-  }
 
   return (
     <Navbar.Section>
@@ -49,6 +41,12 @@ export default function CommandBar() {
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Item
+                  icon={<IconFilePlus size={18} />}
+                  rightSection={<Text color="dimmed">Ctrl+N</Text>}
+                >
+                  New Window
+                </Menu.Item>
+                <Menu.Item
                   icon={<IconUpload size={18} />}
                   onClick={() => openFile()}
                   rightSection={<Text color="dimmed">Ctrl+O</Text>}
@@ -64,7 +62,7 @@ export default function CommandBar() {
                 <Menu.Item
                   icon={<IconDownload size={18} />}
                 >
-                  Save As
+                  Save Text As
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item
@@ -97,12 +95,27 @@ export default function CommandBar() {
                 >
                   Paste Image
                 </Menu.Item>
+                <Menu.Divider />
                 <Menu.Item
                   icon={<IconFilters size={18} />}
                   onClick={() => resetEffects()}
                   rightSection={<Text color="dimmed">Ctrl+R</Text>}
                 >
                   Reset Effects
+                </Menu.Item>
+                <Menu.Item
+                  icon={<IconCrop size={18} />}
+                  onClick={() => {}}
+                >
+                  Reset Crop
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Item
+                  icon={<IconSettings size={18} />}
+                  onClick={() => resetEffects()}
+                  rightSection={<Text color="dimmed">Ctrl+P</Text>}
+                >
+                  Preferences
                 </Menu.Item>
               </Menu.Dropdown>
             </Menu>
