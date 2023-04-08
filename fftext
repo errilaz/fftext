@@ -29,14 +29,16 @@ echo "found browser: $browser"
 if [[ $FFTEXT_DEV = "true" ]]; then
   echo "running in dev mode"
   rm -rf "$FFTEXT/data/profile/Default/Service\ Worker"
-  $browser --load-extension="$FFTEXT/ext" \
+  $browser \
+    --load-extension="$FFTEXT/ext" \
     --user-data-dir="$FFTEXT/data/profile" \
     --app="http://localhost:5173" \
     --auto-open-devtools-for-tabs \
     --enable-logging=stderr
 else
   echo "TODO" && exit
-  $browser --load-extension="$FFTEXT/ext" \
+  $browser \
+    --load-extension="$FFTEXT/ext" \
     --user-data-dir="$FFTEXT/data/profile" \
     --app="file://$FFTEXT/dist/index.html" \
     --allow-file-access-from-files
