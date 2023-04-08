@@ -58,7 +58,7 @@ export default async function transformPreview(image: Sharp, render: Render): Pr
     const dither = new Dither({
       matrix: matrix(render.dithering),
       channels: info.channels,
-      findColor: Color.findRGBA(render.palette),
+      findColor: Color.createFindRGBA(render.palette, "fg"),
     })
 
     const dithered = dither.dither(data, info.width)

@@ -6,7 +6,6 @@ type Mode = "ansi" | "irc"
 
 export default async function print(preview: Sharp, { palette }: Render): Promise<string> {
   const mode = getMode(palette)
-  const findColor = Color.find(palette)
 
   const { data, info: { width, height, channels }} = await preview.clone()
     .removeAlpha()
@@ -36,8 +35,61 @@ export default async function print(preview: Sharp, { palette }: Render): Promis
 
       let char = ""
 
-      output += [...top].toString() + "\r\n"
+      if (repeat) {
+        if (solid) char += Block.full
+        else char += Block.half
+      }
+      else {
+        // Escapes
+        if (mode === "irc") {
+          char += Escape.irc
+          char += Color.find(palette, "fg", top).name
+          if (!solid) {
+            char += ","
+            char += Color.find(palette, "bg", bottom).name
+          }
+        }
+        else if (palette === "256") {
+          char += Escape.ansi256fg
+          char += Color.find(palette, "fg", top).name
+          char += "m"
+          if (!solid) {
+            char += Escape.ansi256bg
+            char += Color.find(palette, "bg", bottom).name
+            char += "m"
+          }
+        }
+        else if (palette === "24bit") {
+          char += Escape.ansi24fg
+          const [r, g, b] = top
+          char += `${r};${g};${b}m`
+          if (!solid) {
+            char += Escape.ansi24bg
+            const [r, g, b] = bottom
+            char += `${r};${g};${b}m`
+          }
+        }
+        else {
+          char += Escape.ansi16
+          char += Color.find(palette, "fg", top).name
+          if (!solid) {
+            char += ";"
+            char += Color.find(palette, "bg", bottom).name
+          }
+          char += "m"
+        }
+
+        // Blocks
+        if (solid) char += Block.full
+        else char += Block.half
+      }
+
+      output += char
     }
+    if (mode === "ansi") {
+      output += Escape.ansiReset
+    }
+    output += "\r\n"
   }
 
   return output
@@ -62,5 +114,11 @@ module Block {
 }
 
 module Escape {
-  const irc = ""
+  export const irc = ""
+  export const ansiReset = "\x1b[0m"
+  export const ansi16 = "\x1b["
+  export const ansi256fg = "\x1b[38;5;"
+  export const ansi256bg = "\x1b[48;5;"
+  export const ansi24fg = "\x1b[38;2;"
+  export const ansi24bg = "\x1b[48;2;"
 }
