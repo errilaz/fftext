@@ -1,11 +1,12 @@
-import { Button, Group, Menu, Modal, Navbar, Stack, Text, Title } from "@mantine/core"
+import { Button, Group, Menu, Modal, Navbar, Stack, Text } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
-import { notifications } from "@mantine/notifications"
-import { IconBug, IconClipboardCheck, IconClipboardCopy, IconCopy, IconCrop, IconDeviceFloppy, IconDoorExit, IconDownload, IconFileDownload, IconFilePlus, IconFileUpload, IconFilters, IconHelp, IconSettings, IconSquareRoundedX, IconUpload, IconWorld, IconWorldWww } from "@tabler/icons-react"
+import { IconBug, IconClipboardCopy, IconCopy, IconCrop, IconDeviceFloppy, IconDownload,
+  IconFilePlus, IconFilters, IconHelp, IconSettings, IconSquareRoundedX, IconUpload,
+  IconWorld } from "@tabler/icons-react"
 import { useShortcuts } from "../hooks"
 import { useHost } from "./HostProvider"
-import fftextPng from "../assets/fftext.png"
 import { useRender } from "../state"
+import fftextPng from "../assets/fftext.png"
 
 export default function CommandBar() {
   const { openFile, openBrowser, copyText } = useHost()
@@ -43,6 +44,7 @@ export default function CommandBar() {
                 <Menu.Item
                   icon={<IconFilePlus size={18} />}
                   rightSection={<Text color="dimmed">Ctrl+N</Text>}
+                  disabled
                 >
                   New Window
                 </Menu.Item>
@@ -56,11 +58,13 @@ export default function CommandBar() {
                 <Menu.Item
                   icon={<IconDeviceFloppy size={18} />}
                   rightSection={<Text color="dimmed">Ctrl+S</Text>}
+                  disabled
                 >
                   Save Text
                 </Menu.Item>
                 <Menu.Item
                   icon={<IconDownload size={18} />}
+                  disabled
                 >
                   Save Text As
                 </Menu.Item>
@@ -92,6 +96,7 @@ export default function CommandBar() {
                 <Menu.Item
                   icon={<IconClipboardCopy size={18} />}
                   rightSection={<Text color="dimmed">Ctrl+V</Text>}
+                  disabled
                 >
                   Paste Image
                 </Menu.Item>
@@ -106,6 +111,7 @@ export default function CommandBar() {
                 <Menu.Item
                   icon={<IconCrop size={18} />}
                   onClick={() => {}}
+                  disabled
                 >
                   Reset Crop
                 </Menu.Item>
@@ -114,6 +120,7 @@ export default function CommandBar() {
                   icon={<IconSettings size={18} />}
                   onClick={() => resetEffects()}
                   rightSection={<Text color="dimmed">Ctrl+P</Text>}
+                  disabled
                 >
                   Preferences
                 </Menu.Item>
@@ -131,6 +138,7 @@ export default function CommandBar() {
                 <Menu.Item
                   icon={<IconWorld size={18} />}
                   onClick={() => openBrowser("https://errilaz.org/fftext")}
+                  disabled
                 >
                   Website
                 </Menu.Item>

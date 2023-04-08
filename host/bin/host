@@ -1,6 +1,6 @@
 #!/bin/bash
 if [[ $FFTEXT_DEV = "true" ]]; then
-  $FFTEXT/host/node_modules/.bin/ts-node --project "$FFTEXT/host/tsconfig.json" "$FFTEXT/host/src/host.ts"
+  $FFTEXT/host/node_modules/.bin/nodemon --delay 100ms --watch "$FFTEXT/host" --quiet --no-stdin --ext ts --exec "$FFTEXT/host/node_modules/.bin/ts-node" -- --project "$FFTEXT/host/tsconfig.json" "$FFTEXT/host/src/host.ts"
 else
   node "$FFTEXT/host/lib/host.js"
 fi

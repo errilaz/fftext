@@ -1,7 +1,7 @@
 import { EffectConfig, Effects, ToggleEffect, ToggleEffects } from "@fftext/core"
 import { Grid, NumberInput, RangeSlider, Slider, Stack, Switch, Text } from "@mantine/core"
 import { ChangeEvent, ReactNode } from "react"
-import { capitalize } from "../common/text"
+import { capitalize } from "../common"
 import { useRender } from "../state"
 
 export function AdjustToggle({ effect, children }: {
@@ -87,8 +87,6 @@ export module AdjustToggle {
 
     const lowerConfig = (Effects.toggle[effect] as any)[lower] as EffectConfig
     const upperConfig = (Effects.toggle[effect] as any)[upper] as EffectConfig
-
-    console.log(lowerValue, upperValue)
 
     return (<>
       <Grid.Col span={9}>

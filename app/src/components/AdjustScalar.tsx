@@ -1,6 +1,6 @@
 import { Effects, ScalarEffect } from "@fftext/core"
 import { Grid, NumberInput, Slider, Text } from "@mantine/core"
-import { capitalize } from "../common/text"
+import { capitalize } from "../common"
 import { useRender } from "../state"
 
 export default function AdjustScalar({ effect }: {

@@ -14,6 +14,7 @@ export interface HostService {
   openBrowser(url: string): Action
   updateRender(render: Render): Action
   copyText(): Action
+  restoreSource(path: string): Action
 }
 
 export interface AppService {
@@ -22,4 +23,5 @@ export interface AppService {
   log(...msgs: any[]): Action
   error(...msgs: any[]): Action
   copyText(path: string): Action
+  hostStarted(): Action
 }

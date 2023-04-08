@@ -1,6 +1,10 @@
 #!/bin/bash
 export FFTEXT=$(realpath "$(dirname $(readlink -f $BASH_SOURCE))")
 
+if [[ $1 = "dev" ]]; then
+  export FFTEXT_DEV=true
+fi
+
 find-browser() {
   path=$(which $1)
   if ! [ -z $path ]
@@ -31,5 +35,9 @@ if [[ $FFTEXT_DEV = "true" ]]; then
     --auto-open-devtools-for-tabs \
     --enable-logging=stderr
 else
-  echo "TODO"
+  echo "TODO" && exit
+  $browser --load-extension="$FFTEXT/ext" \
+    --user-data-dir="$FFTEXT/data/profile" \
+    --app="file://$FFTEXT/dist/index.html" \
+    --allow-file-access-from-files
 fi

@@ -6,12 +6,15 @@ import { useImages, useRender } from "./state"
 import { HostProvider } from "./components/HostProvider"
 import { notifications } from "@mantine/notifications"
 import { IconClipboardCheck } from "@tabler/icons-react"
+import { useClipboard } from "@mantine/hooks"
+import { request } from "./common"
 
 function App() {
   const updateSource = useImages(state => state.updateSource)
   const updatePreview = useImages(state => state.updatePreview)
+  const { copy } = useClipboard()
 
-  const createApp = ({ updateRender }: HostService): AppService => ({
+  const createApp = ({ updateRender, restoreSource }: HostService): AppService => ({
     updateSource(source) {
       updateSource(source)
       const render = useRender.getState().render
@@ -31,12 +34,23 @@ function App() {
       console.error(...msgs)
     },
 
-    copyText(path) {
+    async copyText(path) {
+      const text = await request(`/local-file${path}`)
+      copy(text)
       notifications.show({
         title: "fftext",
         message: "Copied to clipboard!",
         icon: <IconClipboardCheck />
       })
+    },
+
+    async hostStarted() {
+      console.log("host started")
+      const source = useImages.getState().source
+      if (source) {
+        await restoreSource(source.path)
+        updateRender(useRender.getState().render)
+      }
     },
   })
 
