@@ -1,9 +1,0 @@
-{
-  "name": "fftext",
-  "description": "FFText Native Messaging",
-  "path": "/code/fftext/host/bin/host",
-  "type": "stdio",
-  "allowed_origins": [
-    "chrome-extension://jahjeonpcngcopgfkkhpjafkpfaccjmb/"
-  ]
-}

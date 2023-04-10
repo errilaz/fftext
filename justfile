@@ -18,33 +18,47 @@ build-host:
   pnpm build
 
 build-linux:
-  just build
-  just package-linux
+  # just build
+  just bundle linux
+  cp fftext.desktop build/linux/fftext.desktop
 
-package-linux:
-  mkdir -p build/linux
-  cp fftext build/linux/fftext
-  mkdir -p build/linux/app
-  cp -r app/dist build/linux/app
-  mkdir -p build/linux/core
-  cp -r core/lib build/linux/core
-  just publish-package-json core/package.json build/linux/core/package.json
-  mkdir -p build/linux/host
-  cp -r host/bin build/linux/host
-  cp -r host/lib build/linux/host
-  just publish-package-json host/package.json build/linux/host/package.json
+bundle platform:
+  @echo bundling
+  mkdir -p build/{{platform}}
+  cp fftext build/{{platform}}/fftext
+
+  @echo bundling ext
+  mkdir -p build/{{platform}}/ext
+  cp -r ext/src build/{{platform}}/ext
+  cp ext/manifest.json build/{{platform}}/ext/manifest.json
+
+  @echo bundling core
+  mkdir -p build/{{platform}}/core
+  cp -r core/lib build/{{platform}}/core
+  just bundle-package-json core/package.json build/{{platform}}/core/package.json
+
+  @echo bundling app
+  mkdir -p build/{{platform}}/app
+  cp -r app/dist build/{{platform}}/app
+
+  @echo bundling host
+  mkdir -p build/{{platform}}/host
+  cp -r host/bin build/{{platform}}/host
+  cp -r host/lib build/{{platform}}/host
+  just bundle-package-json host/package.json build/{{platform}}/host/package.json
 
 clean:
   rm -rf build
 
 # Utilities
 
-publish-package-json source target:
+bundle-package-json source target:
   #!/usr/bin/env node
   const fs = require("fs")
   const pkg = require("{{cwd}}/{{source}}")
   Object.assign(pkg, pkg.publishConfig)
   delete pkg.publishConfig
+  delete pkg.devDependencies
   if (pkg.dependencies) pkg.dependencies = Object.fromEntries(Object.keys(pkg.dependencies).map(key => {
     const original = pkg.dependencies[key]
     const value = original.startsWith("workspace:")

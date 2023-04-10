@@ -1,5 +1,7 @@
 # fftext
 
+> Convert images to colorized ANSI or IRC halfblocks
+
 ## Requirements
 
 - Node.js
@@ -23,8 +25,10 @@
 - [ ] Linux Lite build
   - [x] transform core/package.json/main `src/core.ts` -> `lib/core.js`
   - [x] transform host/package.json/dependencies/@fftext/core `workspace:*` -> `file:../core`
-  - [ ] package check/install
-  - [ ] Create application entry
+  - [ ] install script
+    - [ ] package check/install
+    - [ ] Create application entry
+      - [ ] run bash explicitly so profile is loaded
 - [ ] About
 - [ ] Website
 

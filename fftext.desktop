@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=fftext
+Comment=Convert images to colorized ANSI or IRC halfblocks
+Exec=bash -i -c "fftext"
+Terminal=false
+Categories=Graphics;

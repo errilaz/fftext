@@ -5,6 +5,8 @@ if [[ $1 = "dev" ]]; then
   export FFTEXT_DEV=true
 fi
 
+# Find requirements
+
 find-browser() {
   path=$(which $1)
   if ! [ -z $path ]
@@ -24,27 +26,47 @@ find-browser brave-browser brave
 node=$(which node)
 [ -z $node ] && zenity --error --text="Node.js not found." && exit
 
-echo "found browser: $FFTEXT_BROWSER $FFTEXT_BROWSER_VERSION"
-
 export FFTEXT_DATA="$HOME/.config/fftext"
-
 mkdir -p "$FFTEXT_DATA"
-mkdir -p "$FFTEXT_DATA/profile/NativeMessagingHosts"
+
+# Check installation
+
+if [[ $FFTEXT_DEV != "true" ]]; then
+  if [[ ! -f "$FFTEXT_DATA/installed.txt" ]]; then
+    npm --prefix "$FFTEXT/host" install \
+    | zenity \
+      --progress \
+      --title="fftext" \
+      --text="Installing dependencies..." \
+      --auto-close \
+      --pulsate \
+    && cp "$FFTEXT/fftext.desktop" "$HOME/.local/share/applications/fftext.desktop" \
+    && echo "Path=$FFTEXT" >> "$HOME/.local/share/applications/fftext.desktop" \
+    && echo "SKIPPING"
+    # && echo "true" > "$FFTEXT_DATA/installed.txt"
+  fi
+fi
+
+# Create host manifest
+
+mkdir -p "$FFTEXT_DATA/$FFTEXT_BROWSER/NativeMessagingHosts"
 node "$FFTEXT/ext/src/createHostManifest.js"
+
+# Launch
 
 if [[ $FFTEXT_DEV = "true" ]]; then
   echo "running in dev mode"
-  rm -rf "$FFTEXT/data/profile/Default/Service\ Worker"
+  rm -rf "$FFTEXT/data/$FFTEXT_BROWSER/Default/Service\ Worker"
   $FFTEXT_BROWSER \
     --load-extension="$FFTEXT/ext" \
-    --user-data-dir="$FFTEXT_DATA/profile" \
+    --user-data-dir="$FFTEXT_DATA/$FFTEXT_BROWSER" \
     --app="http://localhost:5173" \
     --auto-open-devtools-for-tabs \
     --enable-logging=stderr
 else
   $FFTEXT_BROWSER \
     --load-extension="$FFTEXT/ext" \
-    --user-data-dir="$FFTEXT_DATA/profile" \
+    --user-data-dir="$FFTEXT_DATA/$FFTEXT_BROWSER" \
     --app="file://$FFTEXT/app/dist/index.html" \
     --allow-file-access-from-files
 fi
