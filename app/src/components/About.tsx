@@ -22,7 +22,7 @@ export default function About() {
             {Object.keys(info).map(key => (
               <tr key={key}>
                 <th>{key}</th>
-                <td>{info[key]}</td>
+                <td>{String(info[key])}</td>
               </tr>
             ))}
           </tbody>

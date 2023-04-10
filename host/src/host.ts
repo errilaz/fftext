@@ -50,17 +50,15 @@ const app = createBridge({
       detached: true
     })
   },
+
+  appConnected() {
+    hostStarted()
+  },
 })
 
-app.hostStarted({
-  development: process.env.FFTEXT_DEV ?? false,
-  "app path": process.env.FFTEXT,
-  "data path": process.env.FFTEXT_DATA,
-  "node version": process.version,
-  "node platform": process.platform,
-  browser: process.env.FFTEXT_BROWSER,
-  "browser version": process.env.FFTEXT_BROWSER_VERSION,
-})
+if (process.env.FFTEXT_DEV) {
+  hostStarted()
+}
 
 let refreshController: AbortController | undefined
 
@@ -88,4 +86,16 @@ async function refresh() {
     app.error(e)
     console.error(e)
   }
+}
+
+function hostStarted() {
+  app.hostStarted({
+    development: process.env.FFTEXT_DEV ?? false,
+    "app path": process.env.FFTEXT,
+    "data path": process.env.FFTEXT_DATA,
+    "node version": process.version,
+    "node platform": process.platform,
+    browser: process.env.FFTEXT_BROWSER,
+    "browser version": process.env.FFTEXT_BROWSER_VERSION,
+  })
 }

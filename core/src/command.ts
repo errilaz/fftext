@@ -16,6 +16,7 @@ export interface HostService {
   copyText(): Action
   restoreSource(path: string): Action
   newWindow(): Action
+  appConnected(): Action
 }
 
 export interface AppService {

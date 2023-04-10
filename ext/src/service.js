@@ -7,8 +7,8 @@ native.onMessage.addListener(message => {
 
 native.onDisconnect.addListener(() => {
   console.log("service: native port disconnected")
-  native = chrome.runtime.connectNative("fftext");
-});
+  setTimeout(connectNative, 250)
+})
 
 chrome.runtime.onConnect.addListener(content => {
   app = content
@@ -17,6 +17,8 @@ chrome.runtime.onConnect.addListener(content => {
   content.onMessage.addListener(message => {
     native.postMessage(message)
   })
+
+  native.postMessage({ target: "host", method: "appConnected", parameters: [] })
 })
 
 console.log("service: loaded")
