@@ -7,11 +7,13 @@ import { HostProvider } from "./components/HostProvider"
 import { notifications } from "@mantine/notifications"
 import { IconClipboardCheck } from "@tabler/icons-react"
 import { useClipboard } from "@mantine/hooks"
-import { request } from "./common"
+import { useDebug } from "./state/debugState"
+import { File } from "./common"
 
 function App() {
   const updateSource = useImages(state => state.updateSource)
   const updatePreview = useImages(state => state.updatePreview)
+  const setInfo = useDebug(state => state.setInfo)
   const { copy } = useClipboard()
 
   const createApp = ({ updateRender, restoreSource }: HostService): AppService => ({
@@ -35,7 +37,7 @@ function App() {
     },
 
     async copyText(path) {
-      const text = await request(`/local-file${path}`)
+      const text = await File.read(path)
       copy(text)
       notifications.show({
         title: "fftext",
@@ -44,9 +46,10 @@ function App() {
       })
     },
 
-    async hostStarted() {
+    async hostStarted(info) {
       console.log("host started")
       const source = useImages.getState().source
+      setInfo(info)
       if (source) {
         await restoreSource(source.path)
         updateRender(useRender.getState().render)

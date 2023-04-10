@@ -1,6 +1,6 @@
 import { Effects, ScalarEffect } from "@fftext/core"
 import { Grid, NumberInput, Slider, Text } from "@mantine/core"
-import { capitalize } from "../common"
+import { Format } from "../common"
 import { useRender } from "../state"
 
 export default function AdjustScalar({ effect }: {
@@ -11,7 +11,7 @@ export default function AdjustScalar({ effect }: {
   const reset = useRender(state => state.resetScalar)
 
   const { min, max, step, precision, default: defaultValue } = Effects.scalar[effect]
-  const label = capitalize(effect)
+  const label = Format.capitalize(effect)
 
   return (
     <>

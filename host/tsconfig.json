@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
+    "target": "es2022",
     "lib": ["ESNext"],
     "types": ["node"],
     "skipLibCheck": true,
@@ -10,8 +9,8 @@
     "strict": true,
     "module": "ESNext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "outDir": "lib"
   },
   "include": ["src"],
   "ts-node": {

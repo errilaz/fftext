@@ -30,7 +30,6 @@ export interface ToggleEffects {
   blur: Toggle<{ sigma: number }>
   normalize: Toggle<{ lower: number, upper: number }>
   clahe: Toggle<{ width: number, height: number, maxSlope: number }>
-  threshold: Toggle<{ value: number }>
 }
 
 export type Toggle<Properties = {}> = Properties & {
@@ -87,8 +86,8 @@ export module Effects {
       value: configure(2.2, 1, 3, 0.1),
     },
     clahe: {
-      width: configure(3, 0, 50, 1),
-      height: configure(3, 0, 50, 1),
+      width: configure(20, 0, 50, 1),
+      height: configure(20, 0, 50, 1),
       maxSlope: configure(3, 0, 100, 1),
     },
     median: {
@@ -104,9 +103,6 @@ export module Effects {
       lower: configure(1, 0, 100, 1),
       upper: configure(99, 0, 100, 1),
     },
-    threshold: {
-      value: configure(128, 0, 255, 1),
-    }
   }
 
   export function getModulate(effects: ScalarEffects) {

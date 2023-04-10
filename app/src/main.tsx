@@ -2,19 +2,27 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import { MantineProvider } from "@mantine/core"
 import { Notifications } from "@mantine/notifications"
+import { usePreferences } from "./state"
 import App from "./App"
-import "./index.css"
 
 const root = document.getElementById("root") as HTMLElement
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
+    <AppContainer />
+  </React.StrictMode>
+)
+
+function AppContainer() {
+  const scheme = usePreferences(state => state.scheme)
+  const color = usePreferences(state => state.color)
+  return (
     <MantineProvider
       withGlobalStyles
       withNormalizeCSS
       theme={{
-        colorScheme: "dark",
+        colorScheme: scheme,
         defaultRadius: "xs",
-        primaryColor: "green",
+        primaryColor: color,
         components: {
           Button: {
             defaultProps: {
@@ -58,5 +66,5 @@ ReactDOM.createRoot(root).render(
       />
       <App />
     </MantineProvider>
-  </React.StrictMode>
-)
+  )
+}

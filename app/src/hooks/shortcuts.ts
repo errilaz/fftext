@@ -1,12 +1,11 @@
 import { useHotkeys } from "@mantine/hooks"
 import { useHost } from "../components/HostProvider"
-import { useRender } from "../state"
-import { useCamera } from "../state/cameraState"
+import { useRender, useCamera } from "../state"
 
 export function useShortcuts({ openHelp }: {
   openHelp(): void
 }) {
-  const { openFile, copyText } = useHost()
+  const { openFile, copyText, newWindow } = useHost()
   const resetEffects = useRender(state => state.resetEffects)
   const zoomIn = useCamera(state => state.zoomIn)
   const zoomOut = useCamera(state => state.zoomOut)
@@ -19,7 +18,7 @@ export function useShortcuts({ openHelp }: {
     ["ctrl+c", () => copyText()],
     ["ctrl+p", () => {}],
     ["ctrl+s", () => {}],
-    ["ctrl+n", () => {}],
+    ["ctrl+n", () => newWindow()],
     ["-", () => zoomOut()],
     ["=", () => zoomIn()],
     ["ArrowLeft", () => panTo("left")],

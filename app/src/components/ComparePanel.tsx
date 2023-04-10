@@ -1,7 +1,7 @@
-import { Tabs, useMantineColorScheme, useMantineTheme } from "@mantine/core"
+import { Tabs, useMantineTheme } from "@mantine/core"
 import { useState, WheelEvent, MouseEvent } from "react"
-import { useImages } from "../state"
-import { useCamera } from "../state/cameraState"
+import { File } from "../common"
+import { useImages, useCamera } from "../state"
 import { Fill } from "./Layout"
 
 export default function ComparePanel() {
@@ -63,7 +63,7 @@ export default function ComparePanel() {
         {preview?.path && (
           <img
             draggable={false}
-            src={`/local-file${preview.path}`}
+            src={File.url(preview.path)}
             style={{
               transform: `scale(${zoom}) translate(${pan[0]}px, ${pan[1]}px)`,
               imageRendering: "pixelated",
@@ -87,7 +87,7 @@ export default function ComparePanel() {
       >
         {source?.path && preview?.path && (
           <img
-            src={`/local-file${source.path}`}
+            src={File.url(source.path)}
             draggable={false}
             style={{
               transform: `scale(${zoom / (source.width / preview!.width)}) translate(${pan[0] * source.width / preview!.width}px, ${pan[1] * source.width / preview!.width}px)`,

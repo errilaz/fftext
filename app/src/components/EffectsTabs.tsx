@@ -15,6 +15,9 @@ export default function EffectsTabs() {
           <AdjustScalar effect="lightness" />
           <AdjustScalar effect="saturation" />
           <AdjustScalar effect="hue" />
+          <AdjustToggle effect="normalize">
+            <AdjustToggle.Range effect="normalize" lower="lower" upper="upper" />
+          </AdjustToggle>
           <AdjustScalar effect="brightness" />
           <AdjustScalar effect="red" />
           <AdjustScalar effect="green" />
@@ -22,13 +25,6 @@ export default function EffectsTabs() {
           <AdjustToggle effect="gamma">
             <AdjustToggle.Value effect="gamma" setting="value" />
           </AdjustToggle>
-          <AdjustToggle effect="normalize">
-            <AdjustToggle.Range effect="normalize" lower="lower" upper="upper" />
-          </AdjustToggle>
-          
-          {/* <AdjustToggle effect="clahe">
-          </AdjustToggle> */}
-
           <AdjustToggle effect="median">
             <AdjustToggle.Value effect="median" setting="size" />
           </AdjustToggle>
@@ -38,8 +34,10 @@ export default function EffectsTabs() {
           <AdjustToggle effect="blur">
             <AdjustToggle.Value effect="blur" setting="sigma" />
           </AdjustToggle>
-          <AdjustToggle effect="threshold">
-            <AdjustToggle.Value effect="threshold" setting="value" />
+          <AdjustToggle effect="clahe" primary="maxSlope">
+            <AdjustToggle.Value effect="clahe" setting="maxSlope" />
+            <AdjustToggle.Value effect="clahe" setting="width" secondary />
+            <AdjustToggle.Value effect="clahe" setting="height" secondary />
           </AdjustToggle>
         </EffectsGrid>
       </Tabs.Panel>

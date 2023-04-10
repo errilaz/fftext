@@ -1,15 +1,16 @@
 import { EffectConfig, Effects, ToggleEffect, ToggleEffects } from "@fftext/core"
 import { Grid, NumberInput, RangeSlider, Slider, Stack, Switch, Text } from "@mantine/core"
 import { ChangeEvent, ReactNode } from "react"
-import { capitalize } from "../common"
+import { Format } from "../common"
 import { useRender } from "../state"
 
-export function AdjustToggle({ effect, children }: {
-  effect: ToggleEffect
+export function AdjustToggle<Effect extends ToggleEffect, Setting extends keyof ToggleEffects[Effect]>({ effect, children, primary }: {
+  effect: Effect
   children?: ReactNode
+  primary?: Setting
 }) {
   
-  const label = capitalize(effect)
+  const label = Format.capitalize(effect)
   const reset = useRender(state => state.resetToggle)
   const enable = useRender(state => state.render.effects.toggle[effect].enable)
   const toggle = useRender(state => state.toggle)
@@ -29,6 +30,15 @@ export function AdjustToggle({ effect, children }: {
           {label}
         </Text>
         <Switch size="xs" checked={enable} onChange={handleToggle} />
+        {primary && (
+          <Text
+            size="xs"
+            align="right"
+            color="dimmed"
+          >
+            {Format.capitalize(primary as string)}
+          </Text>
+        )}
       </Stack>
     </Grid.Col>
     {children}
@@ -36,16 +46,29 @@ export function AdjustToggle({ effect, children }: {
 }
 
 export module AdjustToggle {
-  export function Value<Effect extends ToggleEffect, Setting extends keyof ToggleEffects[Effect]>({ effect, setting }: {
+  export function Value<Effect extends ToggleEffect, Setting extends keyof ToggleEffects[Effect]>({ effect, setting, secondary }: {
     effect: Effect
     setting: Setting
+    secondary?: boolean
   }) {
     const value = useRender(state => state.render.effects.toggle[effect][setting]) as number
     const adjust = useRender(state => state.adjustToggle)
+    const label = Format.capitalize(setting as string)
 
     const { min, max, step, default: defaultValue } = (Effects.toggle[effect] as any)[setting]
   
     return (<>
+      {secondary && (
+        <Grid.Col span={2}>
+          <Text
+            size="xs"
+            color="dimmed"
+            align="right"
+          >
+            {label}
+          </Text>
+        </Grid.Col>
+      )}
       <Grid.Col span={7}>
         <Slider
           size="sm"

@@ -1,7 +1,7 @@
 import { Tabs } from "@mantine/core"
 import { useState, WheelEvent, MouseEvent } from "react"
-import { useImages } from "../state"
-import { useCamera } from "../state/cameraState"
+import { File } from "../common"
+import { useImages, useCamera } from "../state"
 import { Fill } from "./Layout"
 
 export default function PreviewPanel() {
@@ -58,7 +58,7 @@ export default function PreviewPanel() {
         {preview?.path && (
           <img
             draggable={false}
-            src={`/local-file${preview.path}`}
+            src={File.url(preview.path)}
             style={{
               transform: `scale(${zoom}) translate(${pan[0]}px, ${pan[1]}px)`,
               imageRendering: "pixelated",

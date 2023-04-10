@@ -1,9 +1,9 @@
 import { Dithering, Effects, Render } from "@fftext/core"
 import Dither from "image-dither"
 import sharp, { Sharp } from "sharp"
-import Color from "./color"
+import Color from "./color.js"
 
-export default async function transformPreview(image: Sharp, render: Render): Promise<Sharp> {
+export default async function transformPreview(image: Sharp, render: Render, signal: AbortSignal): Promise<Sharp | undefined> {
   const { scalar, toggle } = render.effects
 
   let preview = image.clone()
@@ -26,10 +26,6 @@ export default async function transformPreview(image: Sharp, render: Render): Pr
     preview = preview.median(toggle.median.size)
   }
 
-  if (toggle.threshold.enable) {
-    preview = preview.threshold(toggle.threshold.value)
-  }
-
   const modulate = Effects.getModulate(scalar)
   if (modulate) preview = preview.modulate(modulate)
 
@@ -47,6 +43,14 @@ export default async function transformPreview(image: Sharp, render: Render): Pr
     preview = preview.gamma(toggle.gamma.value)
   }
 
+  if (toggle.clahe.enable) {
+    preview = preview.clahe({
+      maxSlope: toggle.clahe.maxSlope,
+      width: toggle.clahe.width,
+      height: toggle.clahe.height,
+    })
+  }
+
   // Dither
 
   if (render.palette !== "24bit") {
@@ -54,6 +58,8 @@ export default async function transformPreview(image: Sharp, render: Render): Pr
       .clone()
       .raw()
       .toBuffer({ resolveWithObject: true })
+    
+    if (signal.aborted) return
 
     const dither = new Dither({
       matrix: matrix(render.dithering),
@@ -62,6 +68,9 @@ export default async function transformPreview(image: Sharp, render: Render): Pr
     })
 
     const dithered = dither.dither(data, info.width)
+
+    if (signal.aborted) return
+  
     preview = sharp(Uint8Array.from(dithered), { raw: info })
   }
 

@@ -4,9 +4,8 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "tsc",
+    "clean": "rm -rf lib"
   },
   "dependencies": {
     "@fftext/core": "workspace:*",

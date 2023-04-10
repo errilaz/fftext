@@ -5,13 +5,13 @@
   "description": "Communicates with the fftext backend",
   "author": "errilaz@errilaz.org",
   "background": {
-    "service_worker": "lib/service.js",
+    "service_worker": "src/service.js",
     "type": "module"
   },
   "content_scripts": [
     {
       "matches": ["http://*/*", "file:///*"],
-      "js": ["lib/content.js"]
+      "js": ["src/content.js"]
     }
   ],
   "permissions": [

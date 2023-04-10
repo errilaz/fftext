@@ -2,6 +2,7 @@ import Cropper, { Crop } from "react-image-crop"
 import { Divider, Flex, Tabs } from "@mantine/core"
 import { useState } from "react"
 import { useImages } from "../state"
+import { File } from "../common"
 
 export default function CropPanel() {
   const source = useImages(state => state.source)
@@ -33,7 +34,9 @@ export default function CropPanel() {
             onChange={crop => setCrop(crop)}
             style={{ transform: `scale(${cropScale})` }}
           >
-            {source?.path && <img src={`/local-file${source.path}`} />}
+            {source?.path && (
+              <img src={File.url(source.path)} />
+            )}
           </Cropper>
         </div>
         <Divider size="lg" orientation="vertical" color="dark" />

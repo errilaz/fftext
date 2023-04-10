@@ -1,5 +1,5 @@
-import { Render } from "./render"
-import { Source } from "./source"
+import { Render } from "./render.js"
+import { Source } from "./source.js"
 
 export interface Command {
   target: "host" | "app"
@@ -15,6 +15,7 @@ export interface HostService {
   updateRender(render: Render): Action
   copyText(): Action
   restoreSource(path: string): Action
+  newWindow(): Action
 }
 
 export interface AppService {
@@ -23,5 +24,5 @@ export interface AppService {
   log(...msgs: any[]): Action
   error(...msgs: any[]): Action
   copyText(path: string): Action
-  hostStarted(): Action
+  hostStarted(info: Record<string, any>): Action
 }

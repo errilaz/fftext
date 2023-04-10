@@ -1,12 +1,12 @@
-import * as Ansi from "./ansi"
-import * as Irc from "./irc"
+import * as Ansi from "./ansi.js"
+import * as Irc from "./irc.js"
 
-export * from "./command"
-export * from "./dithering"
-export * from "./interpolation"
-export * from "./palette"
-export * from "./source"
-export * from "./effects"
-export * from "./render"
+export * from "./command.js"
+export * from "./dithering.js"
+export * from "./interpolation.js"
+export * from "./palette.js"
+export * from "./source.js"
+export * from "./effects.js"
+export * from "./render.js"
 
 export { Ansi, Irc }

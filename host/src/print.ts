@@ -1,6 +1,6 @@
 import { Palette, Render } from "@fftext/core"
 import { Sharp } from "sharp"
-import Color, { RGB } from "./color"
+import Color, { RGB } from "./color.js"
 
 type Mode = "ansi" | "irc"
 

@@ -1,7 +1,7 @@
-import { Dithering } from "./dithering"
-import { Toggle, Effects, ToggleEffect } from "./effects"
-import { Interpolation } from "./interpolation"
-import { Palette } from "./palette"
+import { Dithering } from "./dithering.js"
+import { Toggle, Effects, ToggleEffect } from "./effects.js"
+import { Interpolation } from "./interpolation.js"
+import { Palette } from "./palette.js"
 
 export interface Render {
   palette: Palette
@@ -42,7 +42,6 @@ export module Render {
         blur: Effects.defaultToggle("blur"),
         normalize: Effects.defaultToggle("normalize"),
         clahe: Effects.defaultToggle("clahe"),
-        threshold: Effects.defaultToggle("threshold"),
       },
     },
     pipeline: [
@@ -56,7 +55,6 @@ export module Render {
       "blur",
       "normalize",
       "clahe",
-      "threshold",
     ]
   })
 }

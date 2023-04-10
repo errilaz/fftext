@@ -9,37 +9,42 @@ find-browser() {
   path=$(which $1)
   if ! [ -z $path ]
   then
-    browser=$2
-    version=$($path --product-version)
+    export FFTEXT_BROWSER=$2
+    export FFTEXT_BROWSER_VERSION=$($path --product-version)
   fi
 }
 
 find-browser brave-browser brave
-[ -z "$browser" ] && find-browser chromium-browser chromium
-[ -z "$browser" ] && find-browser google-chrome chrome
-[ -z "$browser" ] && find-browser vivaldi vivaldi
-[ -z "$browser" ] && find-browser microsoft-edge-stable edge
-[ -z "$browser" ] && zenity --error --text="Chromium-based browser not found." && exit
+[ -z "$FFTEXT_BROWSER" ] && find-browser chromium-browser chromium
+[ -z "$FFTEXT_BROWSER" ] && find-browser google-chrome chrome
+[ -z "$FFTEXT_BROWSER" ] && find-browser vivaldi vivaldi
+[ -z "$FFTEXT_BROWSER" ] && find-browser microsoft-edge-stable edge
+[ -z "$FFTEXT_BROWSER" ] && zenity --error --text="Chromium-based browser not found." && exit
 
 node=$(which node)
 [ -z $node ] && zenity --error --text="Node.js not found." && exit
 
-echo "found browser: $browser"
+echo "found browser: $FFTEXT_BROWSER $FFTEXT_BROWSER_VERSION"
+
+export FFTEXT_DATA="$HOME/.config/fftext"
+
+mkdir -p "$FFTEXT_DATA"
+mkdir -p "$FFTEXT_DATA/profile/NativeMessagingHosts"
+node "$FFTEXT/ext/src/createHostManifest.js"
 
 if [[ $FFTEXT_DEV = "true" ]]; then
   echo "running in dev mode"
   rm -rf "$FFTEXT/data/profile/Default/Service\ Worker"
-  $browser \
+  $FFTEXT_BROWSER \
     --load-extension="$FFTEXT/ext" \
-    --user-data-dir="$FFTEXT/data/profile" \
+    --user-data-dir="$FFTEXT_DATA/profile" \
     --app="http://localhost:5173" \
     --auto-open-devtools-for-tabs \
     --enable-logging=stderr
 else
-  echo "TODO" && exit
-  $browser \
+  $FFTEXT_BROWSER \
     --load-extension="$FFTEXT/ext" \
-    --user-data-dir="$FFTEXT/data/profile" \
-    --app="file://$FFTEXT/dist/index.html" \
+    --user-data-dir="$FFTEXT_DATA/profile" \
+    --app="file://$FFTEXT/app/dist/index.html" \
     --allow-file-access-from-files
 fi

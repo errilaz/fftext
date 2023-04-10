@@ -24,6 +24,7 @@ importers:
       typescript: ^4.9.3
       use-context-selector: ^1.4.1
       vite: ^4.2.0
+      vite-plugin-singlefile: ^0.13.5
       zustand: ^4.3.6
     dependencies:
       '@emotion/react': 11.10.6_o2wclmlv6kymw75psj4clbbe6a
@@ -48,6 +49,7 @@ importers:
       '@vitejs/plugin-react-swc': 3.2.0_vite@4.2.1
       typescript: 4.9.5
       vite: 4.2.1_@types+node@18.15.11
+      vite-plugin-singlefile: 0.13.5_vite@4.2.1
 
   core:
     specifiers:
@@ -1454,6 +1456,14 @@ packages:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
     dev: false
 
+  /micromatch/4.0.5:
+    resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
+    engines: {node: '>=8.6'}
+    dependencies:
+      braces: 3.0.2
+      picomatch: 2.3.1
+    dev: true
+
   /mimic-fn/2.1.0:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
     engines: {node: '>=6'}
@@ -2185,6 +2195,17 @@ packages:
 
   /v8-compile-cache-lib/3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
+    dev: true
+
+  /vite-plugin-singlefile/0.13.5_vite@4.2.1:
+    resolution: {integrity: sha512-y/aRGh8qHmw2f1IhaI/C6PJAaov47ESYDvUv1am1YHMhpY+19B5k5Odp8P+tgs+zhfvak6QB1ykrALQErEAo7g==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      rollup: '>=2.79.0'
+      vite: '>=3.2.0'
+    dependencies:
+      micromatch: 4.0.5
+      vite: 4.2.1_@types+node@18.15.11
     dev: true
 
   /vite/4.2.1_@types+node@18.15.11:

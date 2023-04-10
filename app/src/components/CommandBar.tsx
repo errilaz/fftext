@@ -7,10 +7,13 @@ import { useShortcuts } from "../hooks"
 import { useHost } from "./HostProvider"
 import { useRender } from "../state"
 import fftextPng from "../assets/fftext.png"
+import Preferences from "./Preferences"
+import About from "./About"
 
 export default function CommandBar() {
-  const { openFile, openBrowser, copyText } = useHost()
+  const { openFile, openBrowser, copyText, newWindow } = useHost()
   const [helpOpen, { open: openHelp, close: closeHelp }] = useDisclosure(false)
+  const [prefsOpen, { open: openPrefs, close: closePrefs }] = useDisclosure(false)
   const resetEffects = useRender(state => state.resetEffects)
   
   useShortcuts({
@@ -19,10 +22,22 @@ export default function CommandBar() {
 
   return (
     <Navbar.Section>
-      <Modal opened={helpOpen} onClose={closeHelp} title="About fftext" centered>
-        <Text>
-          Hello there
-        </Text>
+      <Modal
+        opened={helpOpen}
+        onClose={closeHelp}
+        size="50%"
+        withCloseButton={false}
+      >
+        <About />
+      </Modal>
+      <Modal
+        title="Preferences"
+        opened={prefsOpen}
+        onClose={closePrefs}
+        size="50%"
+        centered
+      >
+        <Preferences />
       </Modal>
       <Stack mb="xs">
         <Group position="apart">
@@ -44,7 +59,7 @@ export default function CommandBar() {
                 <Menu.Item
                   icon={<IconFilePlus size={18} />}
                   rightSection={<Text color="dimmed">Ctrl+N</Text>}
-                  disabled
+                  onClick={() => newWindow()}
                 >
                   New Window
                 </Menu.Item>
@@ -118,9 +133,8 @@ export default function CommandBar() {
                 <Menu.Divider />
                 <Menu.Item
                   icon={<IconSettings size={18} />}
-                  onClick={() => resetEffects()}
+                  onClick={() => openPrefs()}
                   rightSection={<Text color="dimmed">Ctrl+P</Text>}
-                  disabled
                 >
                   Preferences
                 </Menu.Item>
