@@ -4,6 +4,9 @@
   "version": "0.0.1",
   "type": "module",
   "main": "src/core.ts",
+  "publishConfig": {
+    "main": "lib/core.js"
+  },
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf lib"

@@ -1,5 +1,15 @@
 # fftext
 
+## Requirements
+
+- Node.js
+- Chromium-based browser
+  - Chromium
+  - Chrome
+  - Brave
+  - Edge
+  - Vivaldi
+
 ## 0.1.0
 
 - [ ] Save & Save As
@@ -11,6 +21,10 @@
 - [ ] Format numbers on controls
 - [ ] Pipeline control
 - [ ] Linux Lite build
+  - [x] transform core/package.json/main `src/core.ts` -> `lib/core.js`
+  - [x] transform host/package.json/dependencies/@fftext/core `workspace:*` -> `file:../core`
+  - [ ] package check/install
+  - [ ] Create application entry
 - [ ] About
 - [ ] Website
 
