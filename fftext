@@ -21,17 +21,19 @@ find-browser brave-browser brave
 [ -z "$FFTEXT_BROWSER" ] && find-browser google-chrome chrome
 [ -z "$FFTEXT_BROWSER" ] && find-browser vivaldi vivaldi
 [ -z "$FFTEXT_BROWSER" ] && find-browser microsoft-edge-stable edge
-[ -z "$FFTEXT_BROWSER" ] && zenity --error --text="Chromium-based browser not found." && exit
+[ -z "$FFTEXT_BROWSER" ] && zenity --error --text="Supported Chromium-based browser was not found!" && exit
 
 node=$(which node)
-[ -z $node ] && zenity --error --text="Node.js not found." && exit
+[ -z $node ] && zenity --error --text="Node.js not found!" && exit
 
 export FFTEXT_DATA="$HOME/.config/fftext"
 mkdir -p "$FFTEXT_DATA"
 
 # Check installation
 
-if [[ $FFTEXT_DEV != "true" ]]; then
+if [[ $FFTEXT_DEV = "true" ]]; then
+  export FFTEXT_DATA="$FFTEXT_DATA/dev"
+else
   if [[ ! -f "$FFTEXT_DATA/installed.txt" ]]; then
     npm --prefix "$FFTEXT/host" install \
     | zenity \
@@ -42,8 +44,7 @@ if [[ $FFTEXT_DEV != "true" ]]; then
       --pulsate \
     && cp "$FFTEXT/fftext.desktop" "$HOME/.local/share/applications/fftext.desktop" \
     && echo "Path=$FFTEXT" >> "$HOME/.local/share/applications/fftext.desktop" \
-    && echo "SKIPPING"
-    # && echo "true" > "$FFTEXT_DATA/installed.txt"
+    && echo "true" > "$FFTEXT_DATA/installed.txt"
   fi
 fi
 
@@ -56,7 +57,7 @@ node "$FFTEXT/ext/src/createHostManifest.js"
 
 if [[ $FFTEXT_DEV = "true" ]]; then
   echo "running in dev mode"
-  rm -rf "$FFTEXT/data/$FFTEXT_BROWSER/Default/Service\ Worker"
+  rm -rf "$FFTEXT_DATA/$FFTEXT_BROWSER/Default/Service\ Worker"
   $FFTEXT_BROWSER \
     --load-extension="$FFTEXT/ext" \
     --user-data-dir="$FFTEXT_DATA/$FFTEXT_BROWSER" \

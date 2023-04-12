@@ -71,7 +71,7 @@ export module Effects {
   export const scalar: ScalarConfig = {
     width: configure(80, 4, 300, 1),
     brightness: configure(1, 0, 3, 0.05, 2),
-    saturation: configure(1, 0, 50, 0.1, 1),
+    saturation: configure(1, 0, 10, 0.1, 1),
     hue: configure(0, 0, 360, 1),
     lightness: configure(0, -100, 100, 1),
     red: configure(0, 0, 255, 1),

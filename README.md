@@ -29,6 +29,7 @@
     - [ ] package check/install
     - [ ] Create application entry
       - [ ] run bash explicitly so profile is loaded
+  - [ ] make `dev` `install` `uninstall` commands
 - [ ] About
 - [ ] Website
 

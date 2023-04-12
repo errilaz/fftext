@@ -4,13 +4,14 @@ const { writeFileSync } = require("fs")
 
 const root = process.env.FFTEXT
 const data = process.env.FFTEXT_DATA
+const browser = process.env.FFTEXT_BROWSER
 
 const path = join(root, "host", "bin", "host")
 const extPath = join(root, "ext")
 const origin = "chrome-extension://"
   + createExtensionHash(extPath)
   + "/"
-const manifestPath = join(data, "profile", "NativeMessagingHosts", "fftext.json")
+const manifestPath = join(data, browser, "NativeMessagingHosts", "fftext.json")
 
 const hostManifest = {
   path,

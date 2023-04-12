@@ -4,6 +4,7 @@ build:
   just build-core
   just build-host
   just build-app
+  just bundle-linux
 
 build-core:
   cd core && \
@@ -17,12 +18,11 @@ build-host:
   cd host && \
   pnpm build
 
-build-linux:
-  # just build
-  just bundle linux
+bundle-linux:
+  just bundle-base linux
   cp fftext.desktop build/linux/fftext.desktop
 
-bundle platform:
+bundle-base platform:
   @echo bundling
   mkdir -p build/{{platform}}
   cp fftext build/{{platform}}/fftext
