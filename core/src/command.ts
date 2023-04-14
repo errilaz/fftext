@@ -2,7 +2,7 @@ import { Render } from "./render.js"
 import { Source } from "./source.js"
 
 export interface Command {
-  target: "host" | "app"
+  target: "host" | "app" | "extension"
   method: string
   parameters: any[]
 }
@@ -17,6 +17,7 @@ export interface HostService {
   restoreSource(path: string): Action
   newWindow(): Action
   appConnected(): Action
+  pasteImage(encoded: string): Action
 }
 
 export interface AppService {
@@ -26,4 +27,7 @@ export interface AppService {
   error(...msgs: any[]): Action
   copyText(path: string): Action
   hostStarted(info: Record<string, any>): Action
+}
+
+export interface ExtensionService {
 }

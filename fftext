@@ -42,7 +42,7 @@ else
       --text="Installing dependencies..." \
       --auto-close \
       --pulsate \
-    && cp "$FFTEXT/fftext.desktop" "$HOME/.local/share/applications/fftext.desktop" \
+    && cp "$FFTEXT/scripts/fftext.desktop" "$HOME/.local/share/applications/fftext.desktop" \
     && echo "Path=$FFTEXT" >> "$HOME/.local/share/applications/fftext.desktop" \
     && echo "true" > "$FFTEXT_DATA/installed.txt"
   fi
@@ -51,11 +51,13 @@ fi
 # Create host manifest
 
 mkdir -p "$FFTEXT_DATA/$FFTEXT_BROWSER/NativeMessagingHosts"
-node "$FFTEXT/ext/src/createHostManifest.js"
+export FFTEXT_EXTENSION_ID=$(node "$FFTEXT/scripts/createHostManifest.js")
 
 # Launch
 
 if [[ $FFTEXT_DEV = "true" ]]; then
+  echo "building extension"
+  $FFTEXT/ext/node_modules/.bin/tsc -p ext/tsconfig.json
   echo "running in dev mode"
   rm -rf "$FFTEXT_DATA/$FFTEXT_BROWSER/Default/Service\ Worker"
   $FFTEXT_BROWSER \

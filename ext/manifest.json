@@ -5,17 +5,21 @@
   "description": "Communicates with the fftext backend",
   "author": "errilaz@errilaz.org",
   "background": {
-    "service_worker": "src/service.js",
+    "service_worker": "lib/service.js",
     "type": "module"
   },
   "content_scripts": [
     {
       "matches": ["http://*/*", "file:///*"],
-      "js": ["src/content.js"]
+      "js": ["lib/content.js"]
     }
   ],
   "permissions": [
-    "nativeMessaging"
+    "nativeMessaging",
+    "storage",
+    "unlimitedStorage",
+    "clipboardRead",
+    "clipboardWrite"
   ],
   "host_permissions": [
     "http://*/"

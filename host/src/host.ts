@@ -5,13 +5,21 @@ import sharp, { Sharp } from "sharp"
 import { Render } from "@fftext/core"
 import openExternal from "open"
 import createBridge from "./bridge.js"
-import { selectFile } from "./gui.js"
+import { notify, selectFile } from "./gui.js"
 import transformPreview from "./preview.js"
 import print from "./print.js"
 
 let render: Render | undefined
 let image: Sharp | undefined
 let preview: Sharp | undefined
+
+const env = {
+  data: process.env.FFTEXT_DATA!,
+  browser: process.env.FFTEXT_BROWSER!,
+  extensionId: process.env.FFTEXT_EXTENSION_ID!,
+}
+
+;(process.stdout as any)._handle.setBlocking(true)
 
 const app = createBridge({
   async openFile() {
@@ -53,6 +61,18 @@ const app = createBridge({
 
   appConnected() {
     hostStarted()
+  },
+
+  async pasteImage(encoded: string) {
+    const [prefix, data] = encoded.split(",")
+    const [, extension] = /\/(\w+);/.exec(prefix)!
+    const buffer = Buffer.from(data, "base64")
+    const path = resolve(process.env.FFTEXT_DATA!, `pasted.${extension}`)
+    await writeFile(path, buffer)
+    image = sharp(path)
+    const { width, height } = await image.metadata()
+    app.updateSource({ path, width: width!, height: height! })
+    refresh()
   },
 })
 

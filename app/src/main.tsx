@@ -61,7 +61,7 @@ function AppContainer() {
       }}
     >
       <Notifications
-        autoClose={3000}
+        autoClose={2000}
         position="top-right"
       />
       <App />

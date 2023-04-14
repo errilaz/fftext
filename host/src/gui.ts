@@ -8,6 +8,15 @@ export async function selectFile() {
   throw new Error(`Unsupported platform: ${process.platform}.`)
 }
 
+export function notify(summary: string, body?: string) {
+  if (process.platform === "linux") {
+    spawn("notify-send", [summary, body || ""])
+  }
+  else {
+    throw new Error(`Unsupported platform: ${process.platform}.`)
+  }
+}
+
 let lastSelectedDirectory: string | undefined
 
 function selectFileLinux(): Promise<string | undefined> {

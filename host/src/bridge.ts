@@ -7,12 +7,19 @@ export default function createBridge(host: HostService) {
     process.stdin,
     process.stdout,
     {
-      onMessage(message: Command) {
-        (host as any)[message.method](...message.parameters)
+      async onMessage(message: Command) {
+        try {
+          await (host as any)[message.method](...message.parameters)
+        }
+        catch (error) {
+          console.error(error)
+          bridge.emit({ target: "app", method: "error", parameters: [error] })
+        }
       },
 
-      onError(err) {
-        console.error(err)
+      onError(error) {
+        console.error(error)
+        bridge.emit({ target: "app", method: "error", parameters: [error] })
       },
 
       onEnd() {
@@ -29,5 +36,5 @@ export default function createBridge(host: HostService) {
     }
   })
 
-  return service as AppService 
+  return service as AppService
 }

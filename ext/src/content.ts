@@ -1,7 +1,7 @@
 const bridge = chrome.runtime.connect({ name: "fftext" })
 
 window.addEventListener("message", message => {
-  if (message.data.target === "host") {
+  if (message.data.target !== "app") {
     bridge.postMessage(message.data)
   }
 })

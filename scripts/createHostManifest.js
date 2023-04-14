@@ -7,10 +7,9 @@ const data = process.env.FFTEXT_DATA
 const browser = process.env.FFTEXT_BROWSER
 
 const path = join(root, "host", "bin", "host")
-const extPath = join(root, "ext")
-const origin = "chrome-extension://"
-  + createExtensionHash(extPath)
-  + "/"
+const extensionPath = join(root, "ext")
+const extensionId = createExtensionHash(extensionPath)
+const origin = `chrome-extension://${extensionId}/`
 const manifestPath = join(data, browser, "NativeMessagingHosts", "fftext.json")
 
 const hostManifest = {
@@ -24,6 +23,7 @@ const hostManifest = {
 const json = JSON.stringify(hostManifest, null, 2)
 
 writeFileSync(manifestPath, json, "utf8")
+console.log(extensionId)
 
 function createExtensionHash(path) {
   return createHash("sha256")

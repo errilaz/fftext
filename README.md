@@ -15,9 +15,10 @@
 ## 0.1.0
 
 - [ ] Save & Save As
-- [ ] Paste image
-- [ ] Dragdrop image
+- [x] Paste image
+- [x] Dragdrop image
 - [ ] Crop, Reset Crop
+- [ ] Show dimensions somewhere
 - [ ] `chokidar` watch on input file, preference option
 - [ ] Block all webRequests (just in case)
 - [ ] Format numbers on controls
@@ -25,10 +26,11 @@
 - [ ] Linux Lite build
   - [x] transform core/package.json/main `src/core.ts` -> `lib/core.js`
   - [x] transform host/package.json/dependencies/@fftext/core `workspace:*` -> `file:../core`
-  - [ ] install script
-    - [ ] package check/install
-    - [ ] Create application entry
-      - [ ] run bash explicitly so profile is loaded
+  - [x] install script
+    - [x] package check/install
+    - [x] Create application entry
+      - [x] run bash explicitly so profile is loaded
+      - [ ] Ask if user wants to make application entry
   - [ ] make `dev` `install` `uninstall` commands
 - [ ] About
 - [ ] Website

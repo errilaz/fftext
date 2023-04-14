@@ -2,8 +2,9 @@ import { AppService, HostService } from "@fftext/core"
 import { AppShell } from "@mantine/core"
 import Sidebar from "./components/Sidebar"
 import AppTabs from "./components/AppTabs"
-import { useImages, useRender } from "./state"
+import DropZone from "./components/DropZone"
 import { HostProvider } from "./components/HostProvider"
+import { useImages, useRender } from "./state"
 import { notifications } from "@mantine/notifications"
 import { IconClipboardCheck } from "@tabler/icons-react"
 import { useClipboard } from "@mantine/hooks"
@@ -42,7 +43,7 @@ function App() {
       notifications.show({
         title: "fftext",
         message: "Copied to clipboard!",
-        icon: <IconClipboardCheck />
+        icon: <IconClipboardCheck />,
       })
     },
 
@@ -59,9 +60,11 @@ function App() {
 
   return (
     <HostProvider createApp={createApp}>
-      <AppShell navbar={<Sidebar />} padding={0}>
-        <AppTabs />
-      </AppShell>
+      <DropZone>
+        <AppShell navbar={<Sidebar />} padding={0}>
+          <AppTabs />
+        </AppShell>
+      </DropZone>
     </HostProvider>
   )
 }
