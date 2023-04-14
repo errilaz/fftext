@@ -11,10 +11,24 @@ import Preferences from "./Preferences"
 import About from "./About"
 
 export default function CommandBar() {
-  const { openFile, openBrowser, copyText, newWindow } = useHost()
+  const { openFile, openBrowser, copyText, newWindow, pasteImage } = useHost()
   const [helpOpen, { open: openHelp, close: closeHelp }] = useDisclosure(false)
   const [prefsOpen, { open: openPrefs, close: closePrefs }] = useDisclosure(false)
   const resetEffects = useRender(state => state.resetEffects)
+  
+  const paste = async () => { 
+    const items = await navigator.clipboard.read()
+    if (!items[0]) return
+    const item = items[0]
+    if (!/image\//.test(item.types[0])) return
+
+    const blob = await item.getType(item.types[0])
+    const reader = new FileReader()
+    reader.onload = reader => {
+      pasteImage(reader.target!.result as string)
+    }
+    reader.readAsDataURL(blob)
+  }
   
   useShortcuts({
     openHelp,
@@ -111,7 +125,7 @@ export default function CommandBar() {
                 <Menu.Item
                   icon={<IconClipboardCopy size={18} />}
                   rightSection={<Text color="dimmed">Ctrl+V</Text>}
-                  disabled
+                  onClick={() => paste()}
                 >
                   Paste Image
                 </Menu.Item>

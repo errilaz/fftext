@@ -19,6 +19,7 @@ function App() {
 
   const createApp = ({ updateRender, restoreSource }: HostService): AppService => ({
     updateSource(source) {
+      source.path = source.path + `?${Date.now()}`
       updateSource(source)
       const render = useRender.getState().render
       updateRender(render)

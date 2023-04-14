@@ -41,7 +41,7 @@ export default function DropZone({ children }: { children: ReactNode }) {
     }
     else if (items.length) {
       const item = items[0]
-      if (!/images\//.test(item.type)) return
+      if (!/image\//.test(item.type)) return
       file = item.getAsFile()
     }
     if (!file) return
