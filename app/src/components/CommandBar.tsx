@@ -5,13 +5,14 @@ import { IconBug, IconClipboardCopy, IconCopy, IconCrop, IconDeviceFloppy, IconD
   IconWorld } from "@tabler/icons-react"
 import { useShortcuts } from "../hooks"
 import { useHost } from "./HostProvider"
-import { useRender } from "../state"
+import { useImages, useRender } from "../state"
 import fftextPng from "../assets/fftext.png"
 import Preferences from "./Preferences"
 import About from "./About"
 
 export default function CommandBar() {
-  const { openFile, openBrowser, copyText, newWindow, pasteImage } = useHost()
+  const source = useImages(state => state.source)
+  const { openFile, openBrowser, copyText, newWindow, pasteImage, saveAs } = useHost()
   const [helpOpen, { open: openHelp, close: closeHelp }] = useDisclosure(false)
   const [prefsOpen, { open: openPrefs, close: closePrefs }] = useDisclosure(false)
   const resetEffects = useRender(state => state.resetEffects)
@@ -58,6 +59,7 @@ export default function CommandBar() {
           <img
             src={fftextPng}
             width="110px"
+            draggable={false}
             style={{ imageRendering: "pixelated" }}
           />
           <Button.Group>
@@ -93,7 +95,8 @@ export default function CommandBar() {
                 </Menu.Item>
                 <Menu.Item
                   icon={<IconDownload size={18} />}
-                  disabled
+                  onClick={() => saveAs()}
+                  disabled={source === null}
                 >
                   Save Text As
                 </Menu.Item>
@@ -118,6 +121,7 @@ export default function CommandBar() {
                 <Menu.Item
                   icon={<IconCopy size={18} />}
                   rightSection={<Text color="dimmed">Ctrl+C</Text>}
+                  disabled={source === null}
                   onClick={() => copyText()}
                 >
                   Copy Text

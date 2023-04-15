@@ -1,5 +1,8 @@
-import { Table, Tabs } from "@mantine/core"
+import { Center, Stack, Table, Tabs, Text } from "@mantine/core"
 import { useDebug } from "../state/debugState"
+import fftextPng from "../assets/fftext.png"
+import { useHost } from "./HostProvider"
+import Link from "./Link"
 
 export default function About() {
   const info = useDebug(state => state.info)
@@ -14,7 +17,22 @@ export default function About() {
         <Tabs.Tab value="debug">Debug</Tabs.Tab>
       </Tabs.List>
       <Tabs.Panel value="about">
-        hello!
+        <Stack
+          align="center"
+        >
+          <img
+            src={fftextPng}
+            width="400px"
+            draggable={false}
+            style={{ imageRendering: "pixelated" }}
+          />
+          <Text
+            size="lg"
+          >
+            by{" "}
+            <Link href="https://errilaz.org">errilaz</Link>
+          </Text>
+        </Stack>
       </Tabs.Panel>
       <Tabs.Panel value="debug">
         <Table>

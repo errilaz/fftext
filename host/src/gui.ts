@@ -1,9 +1,9 @@
 import { spawn } from "child_process"
 import { dirname } from "path"
 
-export async function selectFile() {
+export async function selectFile(save: boolean) {
   if (process.platform === "linux") {
-    return selectFileLinux()
+    return selectFileLinux(save)
   }
   throw new Error(`Unsupported platform: ${process.platform}.`)
 }
@@ -17,17 +17,26 @@ export function notify(summary: string, body?: string) {
   }
 }
 
-let lastSelectedDirectory: string | undefined
+let lastOpenedDirectory: string | undefined
+let lastSavedDirectory: string | undefined
 
-function selectFileLinux(): Promise<string | undefined> {
+function selectFileLinux(save: boolean): Promise<string | undefined> {
   return new Promise(resolve => {
     let result: undefined | string = undefined
     const args = [
       "--file-selection",
-      "--file-filter", "Images | *.jpg *.jpeg *.png *.webp *.gif *.avif *.tiff *.svg",
     ]
-    if (lastSelectedDirectory) {
-      args.push("--filename", lastSelectedDirectory + "/")
+    if (save) {
+      args.push("--save", "--confirm-overwrite")
+    }
+    else {
+      args.push("--file-filter", "Images | *.jpg *.jpeg *.png *.webp *.gif *.avif *.tiff *.svg")
+    }
+    if (!save && lastOpenedDirectory) {
+      args.push("--filename", lastOpenedDirectory + "/")
+    }
+    else if (save && lastSavedDirectory) {
+      args.push("--filename", lastSavedDirectory + "/")
     }
     const child = spawn("zenity", args)
 
@@ -36,8 +45,11 @@ function selectFileLinux(): Promise<string | undefined> {
     })
 
     child.on("close", () => {
-      if (result) {
-        lastSelectedDirectory = dirname(result.trim())
+      if (result && !save) {
+        lastOpenedDirectory = dirname(result.trim())
+      }
+      else if (result) {
+        lastSavedDirectory = dirname(result.trim())
       }
       resolve(result?.trim())
     })

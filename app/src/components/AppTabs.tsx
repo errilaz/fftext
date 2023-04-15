@@ -10,6 +10,7 @@ export default function AppTabs() {
         height: "100%",
         display: "flex",
         flexDirection: "column",
+        userSelect: "none",
       },
       panel: { flex: 1 },
     }}>

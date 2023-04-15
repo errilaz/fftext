@@ -18,6 +18,7 @@ export interface HostService {
   newWindow(): Action
   appConnected(): Action
   pasteImage(encoded: string): Action
+  saveAs(): Action
 }
 
 export interface AppService {

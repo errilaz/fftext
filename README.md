@@ -22,6 +22,8 @@
 - [ ] `chokidar` watch on input file, preference option
 - [ ] Block all webRequests (just in case)
 - [ ] Format numbers on controls
+- [ ] Catch all Ctrl+R
+- [ ] Preference to set width on import
 - [ ] Pipeline control
 - [ ] Linux Lite build
   - [x] transform core/package.json/main `src/core.ts` -> `lib/core.js`

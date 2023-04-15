@@ -23,12 +23,18 @@ const env = {
 
 const app = createBridge({
   async openFile() {
-    const path = await selectFile()
+    const path = await selectFile(false)
     if (!path) return
     image = sharp(path)
     const { width, height } = await image.metadata()
     app.updateSource({ path, width: width!, height: height! })
     refresh()
+  },
+
+  async saveAs() {
+    const path = await selectFile(true)
+    if (!path) return
+    notify("fudge you tony")
   },
 
   async restoreSource(path) {
