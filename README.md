@@ -25,6 +25,7 @@
 - [ ] Catch all Ctrl+R
 - [ ] Preference to set width on import
 - [ ] Pipeline control
+- [ ] Error boundary
 - [ ] Linux Lite build
   - [x] transform core/package.json/main `src/core.ts` -> `lib/core.js`
   - [x] transform host/package.json/dependencies/@fftext/core `workspace:*` -> `file:../core`

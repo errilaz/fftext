@@ -28,9 +28,14 @@ export default function About() {
           />
           <Text
             size="lg"
+            align="center"
           >
             by{" "}
             <Link href="https://errilaz.org">errilaz</Link>
+            <br /><br />
+            <Link href="https://errilaz.org/fftext">Official Website</Link>
+            <br />
+            <Link href="https://github.com/errilaz/fftext">GitHub</Link>
           </Text>
         </Stack>
       </Tabs.Panel>

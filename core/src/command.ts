@@ -19,6 +19,7 @@ export interface HostService {
   appConnected(): Action
   pasteImage(encoded: string): Action
   saveAs(): Action
+  save(path: string): Action
 }
 
 export interface AppService {
@@ -28,6 +29,8 @@ export interface AppService {
   error(...msgs: any[]): Action
   copyText(path: string): Action
   hostStarted(info: Record<string, any>): Action
+  saveAs(path: string): Action
+  saved(): Action
 }
 
 export interface ExtensionService {

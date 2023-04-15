@@ -5,17 +5,23 @@ import { IconBug, IconClipboardCopy, IconCopy, IconCrop, IconDeviceFloppy, IconD
   IconWorld } from "@tabler/icons-react"
 import { useShortcuts } from "../hooks"
 import { useHost } from "./HostProvider"
-import { useImages, useRender } from "../state"
+import { useImages, useRender, useTarget } from "../state"
 import fftextPng from "../assets/fftext.png"
 import Preferences from "./Preferences"
 import About from "./About"
 
 export default function CommandBar() {
   const source = useImages(state => state.source)
-  const { openFile, openBrowser, copyText, newWindow, pasteImage, saveAs } = useHost()
+  const target = useTarget(state => state.target)
+  const { openFile, openBrowser, copyText, newWindow, pasteImage, saveAs, save } = useHost()
   const [helpOpen, { open: openHelp, close: closeHelp }] = useDisclosure(false)
   const [prefsOpen, { open: openPrefs, close: closePrefs }] = useDisclosure(false)
   const resetEffects = useRender(state => state.resetEffects)
+
+  const handleSave = () => {
+    if (target === null) saveAs()
+    else save(target)
+  }
   
   const paste = async () => { 
     const items = await navigator.clipboard.read()
@@ -33,6 +39,7 @@ export default function CommandBar() {
   
   useShortcuts({
     openHelp,
+    openPrefs,
   })
 
   return (
@@ -89,7 +96,8 @@ export default function CommandBar() {
                 <Menu.Item
                   icon={<IconDeviceFloppy size={18} />}
                   rightSection={<Text color="dimmed">Ctrl+S</Text>}
-                  disabled
+                  onClick={() => handleSave()}
+                  disabled={source === null}
                 >
                   Save Text
                 </Menu.Item>

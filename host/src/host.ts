@@ -5,19 +5,13 @@ import sharp, { Sharp } from "sharp"
 import { Render } from "@fftext/core"
 import openExternal from "open"
 import createBridge from "./bridge.js"
-import { notify, selectFile } from "./gui.js"
+import { selectFile } from "./gui.js"
 import transformPreview from "./preview.js"
 import print from "./print.js"
 
 let render: Render | undefined
 let image: Sharp | undefined
 let preview: Sharp | undefined
-
-const env = {
-  data: process.env.FFTEXT_DATA!,
-  browser: process.env.FFTEXT_BROWSER!,
-  extensionId: process.env.FFTEXT_EXTENSION_ID!,
-}
 
 ;(process.stdout as any)._handle.setBlocking(true)
 
@@ -34,7 +28,14 @@ const app = createBridge({
   async saveAs() {
     const path = await selectFile(true)
     if (!path) return
-    notify("fudge you tony")
+    app.saveAs(path)
+  },
+
+  async save(path: string) {
+    if (!preview || !render) return
+    const text = await print(preview, render)
+    await writeFile(path, text, "utf8")
+    app.saved()
   },
 
   async restoreSource(path) {
