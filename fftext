@@ -42,9 +42,12 @@ else
       --text="Installing dependencies..." \
       --auto-close \
       --pulsate \
-    && cp "$FFTEXT/scripts/fftext.desktop" "$HOME/.local/share/applications/fftext.desktop" \
-    && echo "Path=$FFTEXT" >> "$HOME/.local/share/applications/fftext.desktop" \
     && echo "true" > "$FFTEXT_DATA/installed.txt"
+    if zenity --question --text="Do you want to make an application shortcut?"
+    then
+      cp "$FFTEXT/scripts/fftext.desktop" "$HOME/.local/share/applications/fftext.desktop"
+      echo "Path=$FFTEXT" >> "$HOME/.local/share/applications/fftext.desktop"
+    fi
   fi
 fi
 

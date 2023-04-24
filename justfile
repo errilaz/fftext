@@ -27,6 +27,7 @@ bundle-linux:
   just bundle-base linux
   mkdir -p build/linux/scripts
   cp scripts/fftext.desktop build/linux/scripts/fftext.desktop
+  cp scripts/createHostManifest.js build/linux/scripts/createHostManifest.js
 
 bundle-base platform:
   @echo bundling
